@@ -1,0 +1,129 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+
+
+.page-container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0 ;
+  padding : 0;
+  background: rgb(24, 101, 102);
+  background: linear-gradient(0deg, rgba(14, 164, 167, 0.651) 0%, rgba(37,17,73,1) 100%);
+
+}
+
+.nav-bar{
+  flex: 0 1 5%;
+  box-shadow: 0 10px 20px rgb(11, 0, 36); 
+
+}
+
+.app-container {
+   flex:0 1 90%;
+   overflow:auto;
+     color: #fff;
+    display: flex;                  
+    justify-content: center;     
+     padding: 20px;  
+    color: rgba(250, 235, 215, 0);                
+    box-sizing: border-box; 
+  }
+ 
+
+.footer{
+ flex:0 1 5%;
+text-align: center;
+   justify-content: first baseline;
+}
+
+ 
+ 
+ *{
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: Arial, Helvetica,  sans-serif;
+ 
+     background-color: rgba(190, 47, 47, 0);
+     }
+
+     body{
+      width: 100%;
+      background-color: rgba(255, 0, 0, 0);
+    }
+
+
+    .wrapper {
+      width: auto;
+      min-width: 310px;
+      background:transparent;
+        color: #fff;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255, .2);
+        backdrop-filter: blur(50px);
+        box-shadow: 0 0 10px (0,0,0,.2);
+        padding: 30px 30px;
+        background: rgb(24, 101, 102);
+        background: linear-gradient(0deg, rgba(14, 164, 167, 0.651) 0%, rgba(37,17,73,1) 100%);
+    
+    }
+    
+    .wrapper h1 {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .green {
+        background-color: rgb(0, 255, 0); /* or any other style you want for active */
+      }
+      
+      .red {
+        background-color: rgb(255, 1, 1); /* or any other style you want for inactive */
+      }
+    
+.blur{
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+::ng-deep .green-snackbar{
+   background-color: rgba(35, 241, 73, 0.647) !important;
+  color: aliceblue !important;
+  font-size: 16px;
+}
+
+
+
+.green-snackbar {
+  background: rgb(65, 252, 134);
+  color: white;
+}
+.green-snackbar button {
+  background-color: rgb(65, 252, 134);
+  color: white;
+  border: none;
+}
+.red-snackbar {
+  background: #F44336;
+  color: white;
+}
+.red-snackbar button {
+  background-color: #F44336;
+  color: white !important;
+  border: none;
+}
+
+.mat-snack-bar-container
+{
+  font-size: 24px;
+  color: black;
+  background-color: #fff;
+}
+
+.custom-snackbar{
+  font-size: 1.5rem !important;
+  color: black !important;
+  background-color: #fff !important;
+}

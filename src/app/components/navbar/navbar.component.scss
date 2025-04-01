@@ -1,0 +1,27 @@
+.spacer{
+    flex: 1 1 auto;
+}
+
+mat-toolbar a:hover {
+    background-color: rgb(35, 114, 154);
+    color: white;
+ }
+
+ .active {
+    background-color: rgb(35, 114, 154);
+    color: white;
+ }
+
+ .custom-toolbar{
+    background-color: rgba(30, 22, 63, 0.978);
+    color:#fff; position: relative; 
+    z-index: 1000;  
+    padding: 5px;
+}
+
+mat-toolbar a {
+    margin: 0 10px;  
+    font-size: large;
+}
+
+ 
