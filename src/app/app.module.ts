@@ -15,6 +15,7 @@ import { TestUnitConvertionComponent } from './screens/test-unit-convertion.comp
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './components/login/login.component';
+import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { LoginComponent } from './components/login/login.component';
     SpinnerComponent,
     TestUnitConvertionComponent,
     LoginComponent,
+    BmiCalculatorScreenComponent,
 
   ],
   imports: [
