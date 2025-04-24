@@ -1,0 +1,31 @@
+<div>
+    <h1>Unit Conversion Tester</h1>
+  
+    <!-- Kilograms to Pounds -->
+    <h2>Kilograms to Pounds</h2>
+    <input type="number" [(ngModel)]="kgInput" placeholder="Enter kilograms">
+    <button (click)="convertKgToPounds()">Convert</button>
+    <p *ngIf="kgToPoundsResult">Result: {{ kgToPoundsResult | number: '1.2-2' }} pounds</p>
+  
+    <!-- Pounds to Kilograms -->
+    <h2>Pounds to Kilograms</h2>
+    <input type="number" [(ngModel)]="poundsInput" placeholder="Enter pounds">
+    <button (click)="convertPoundsToKg()">Convert</button>
+    <p *ngIf="poundsToKgResult">Result: {{ poundsToKgResult | number: '1.2-2' }} kilograms</p>
+  
+    <!-- Centimeters to Feet & Inches -->
+    <h2>Centimeters to Feet & Inches</h2>
+    <input type="number" [(ngModel)]="cmInput" placeholder="Enter centimeters">
+    <button (click)="convertCmToFeetAndInches()">Convert</button>
+    <p *ngIf="feetResult !== undefined && inchesResult !== undefined">
+        Result: {{ feetResult }} feet {{ inchesResult }} inches
+    </p>
+  
+    <!-- Feet & Inches to Centimeters -->
+    <h2>Feet & Inches to Centimeters</h2>
+    <input type="number" [(ngModel)]="feetInput" placeholder="Enter feet">
+    <input type="number" [(ngModel)]="inchesInput" placeholder="Enter inches">
+    <button (click)="convertFeetAndInchesToCm()">Convert</button>
+    <p *ngIf="cmResult">Result: {{ cmResult | number: '1.2-2' }} centimeters</p>
+  </div>
+  

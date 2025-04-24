@@ -1,0 +1,99 @@
+<div class="calorie-burn-container">
+    <h2>🔥 Calorie Burn Estimator</h2>
+  
+    <form
+      [formGroup]="calorieForm"
+      (ngSubmit)="onSubmit()"
+      [ngClass]="{ 'form-transition': showResults }"
+    >
+      <div class="cards-flex">
+        <!-- Personal Info Card -->
+        <div class="form-card">
+          <h3>👤 Personal Info</h3>
+  
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="radio-group">
+              <label><input type="radio" formControlName="gender" value="male" /> Male</label>
+              <label><input type="radio" formControlName="gender" value="female" /> Female</label>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" formControlName="age" placeholder="e.g. 27" />
+          </div>
+  
+          <div class="form-group">
+            <label>Height (cm)</label>
+            <input type="number" formControlName="height" placeholder="e.g. 173" />
+          </div>
+  
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" formControlName="weight" placeholder="e.g. 64.4" />
+          </div>
+        </div>
+  
+        <!-- Activity Info Card -->
+        <div class="form-card">
+          <h3>🏃 Activity Info</h3>
+  
+          <div class="form-group">
+            <label>Activity</label>
+            <select formControlName="activity">
+              <option value="walk">Walking</option>
+              <option value="run">Running</option>
+              <option value="bike">Biking</option>
+              <option value="swim">Swimming</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label>Distance (km)</label>
+            <input type="number" formControlName="distance" placeholder="e.g. 21" />
+          </div>
+  
+          <div class="form-group">
+            <label>Duration (minutes)</label>
+            <input type="number" formControlName="duration" placeholder="e.g. 60" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="submit-button-container">
+        <button type="submit" class="calculate-button">Calculate</button>
+      </div>
+    </form>
+  
+    <div
+      *ngIf="summary"
+      class="result-container"
+      [ngClass]="{ 'result-visible': showResults }"
+    >
+      <div class="summary-cards">
+        <div class="summary-card">
+          <h3>📊 Daily Burn</h3>
+          <p>{{ summary.daily }} kcal</p>
+        </div>
+        <div class="summary-card">
+          <h3>📈 Weekly Burn</h3>
+          <p>{{ summary.weekly }} kcal</p>
+        </div>
+        <div class="summary-card">
+          <h3>⏱ Pace</h3>
+          <p>{{ summary.pace }}</p>
+        </div>
+      </div>
+  
+      <div class="chart-container">
+        <canvas
+          baseChart
+          [datasets]="[{ data: [summary.daily, summary.weekly], label: 'Calories Burned' }]"
+          [labels]="['Daily', 'Weekly']"
+          [options]="{ responsive: true }"
+          [type]="'bar'"
+        ></canvas>
+      </div>
+    </div>
+  </div>

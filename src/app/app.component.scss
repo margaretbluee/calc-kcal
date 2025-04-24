@@ -11,17 +11,16 @@
   padding : 0;
   background: rgb(24, 101, 102);
   background: linear-gradient(0deg, rgba(14, 164, 167, 0.651) 0%, rgba(37,17,73,1) 100%);
-
 }
 
 .nav-bar{
-  flex: 0 1 5%;
+  flex: 0 1 8%;
   box-shadow: 0 10px 20px rgb(11, 0, 36); 
 
 }
 
 .app-container {
-   flex:0 1 90%;
+   flex:0 1 92%;
    overflow:auto;
      color: #fff;
     display: flex;                  
@@ -32,11 +31,11 @@
   }
  
 
-.footer{
- flex:0 1 5%;
-text-align: center;
-   justify-content: first baseline;
-}
+// .footer{
+//  flex:0 1 5%;
+// text-align: center;
+//    justify-content: first baseline;
+// }
 
  
  

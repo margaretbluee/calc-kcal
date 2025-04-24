@@ -1,0 +1,41 @@
+{
+    "bmiScreen":{
+        "bmiCalculator": "Υπολογιστής ΔΜΣ",
+        "gender": "Φύλο",
+        "male": "Άντρας",
+        "female": "Γυναίκα",
+        "age": "Ηλικία",
+        "height": "Ύψος (εκ.)",
+        "weight": "Βάρος (κλ)",
+        "calculate": "Υπολόγισε",
+        "result": "O ΔΜΣ σας είναι: ",
+        "category": "Κατηγορία",
+        "categoryNormal": "Κανονικό βάρος",
+        "category_overweight": "Υπέρβαρος",
+        "category_obesity": "Παχυσαρκία",
+        "category_underweight": "Ανασφαλές βάρος"
+    },
+    "loginScreen": {
+        
+    },
+    "calorieScreen": {
+        "title": "Υπολογισμός Θερμίδων",
+        "gender": "Φύλο",
+        "male": "Άνδρας",
+        "female": "Γυναίκα",
+        "age": "Ηλικία",
+        "height": "Ύψος (εκ.)",
+        "weight": "Βάρος (κλ.)",
+        "activity": "Δραστηριότητα",
+        "walk": "Περπάτημα",
+        "run": "Τρέξιμο",
+        "bike": "Ποδηλασία",
+        "swim": "Κολύμβηση",
+        "distance": "Απόσταση (χλμ)",
+        "duration": "Διάρκεια (λεπτά)",
+        "calculate": "Υπολογισμός",
+        "results": "Αποτελέσματα",
+        "daily": "Ημερήσια Καύση",
+        "weekly": "Εβδομαδιαία Καύση"
+      }
+  }

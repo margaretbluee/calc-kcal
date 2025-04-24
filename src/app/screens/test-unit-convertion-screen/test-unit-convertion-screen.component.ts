@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { UnitConversionService } from '../services/unit-conversion.service';
+import { UnitConversionService } from '../../services/unit-conversion.service';
 
 @Component({
-  selector: 'test-unit-convertion',
-  templateUrl: './test-unit-convertion.component.html',
-  styleUrls: ['./test-unit-convertion.component.scss']
+  selector: 'test-unit-convertion-screen',
+  templateUrl: './test-unit-convertion-screen.component.html',
+  styleUrls: ['./test-unit-convertion-screen.component.scss']
 })
-export class TestUnitConvertionComponent {
+export class TestUnitConvertionScreenComponent {
   constructor(private readonly _unitConvertionService: UnitConversionService) {}
 
   // Input values

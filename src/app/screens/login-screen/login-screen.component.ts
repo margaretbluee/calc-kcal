@@ -9,11 +9,11 @@ import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './login-screen.component.html',
+  styleUrls: ['./login-screen.component.scss'],
 })
-export class LoginComponent {
-  CLASSNAME: string = 'LoginComponent';
+export class LoginScreenComponent {
+  CLASSNAME: string = 'LoginScreenComponent';
   email: string = '';
   password: string = '';
   loginForm!: FormGroup;

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -11,21 +11,37 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { UnitConversionService } from './services/unit-conversion.service';
-import { TestUnitConvertionComponent } from './screens/test-unit-convertion.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+ import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
+import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
+import { TestUnitConvertionScreenComponent } from './screens/test-unit-convertion-screen/test-unit-convertion-screen.component';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AppStatesService } from './services/app-states.service';
+import { AuthService } from './services/auth.service';
+import { BmiCalculationService } from './services/bmi-calculation.service';
+import { CommonFlowService } from './services/common-flow.service';
+import { LoadingService } from './services/loading.service';
+import { LanguageComponent } from './components/language/language.component';
+import { CalorieBurnScreenComponent } from './screens/calorie-burn-screen/calorie-burn-screen.component';
+import { NgChartsModule } from 'ng2-charts'; 
 
-import { LoginComponent } from './components/login/login.component';
-import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
     SpinnerComponent,
-    TestUnitConvertionComponent,
-    LoginComponent,
     BmiCalculatorScreenComponent,
-
+    LoginScreenComponent,
+    TestUnitConvertionScreenComponent,
+    LanguageComponent,
+    CalorieBurnScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -36,10 +52,23 @@ import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bm
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
+    NgChartsModule ,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     UnitConversionService,
-
+    AppStatesService,
+    AuthService,
+    BmiCalculationService,
+    CommonFlowService,
+    LoadingService,
+    
   ],
   bootstrap: [AppComponent]
 })

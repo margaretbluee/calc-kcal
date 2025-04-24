@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    width: 100%;
+  }
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: black;
+  }
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: black;
+  }
+  input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    color: black;
+  }
+  .radio-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .radio-group label {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: black;
+  }
+  button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:disabled {
+    background-color: #ccc;
+  }
+  .result {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: black;
+  }
+  .category {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }

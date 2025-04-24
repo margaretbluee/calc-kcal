@@ -1,0 +1,42 @@
+{
+    "bmiScreen":{
+        "bmiCalculator": "BMI Calculator",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "age": "Age",
+        "height": "Height (cm)",
+        "weight": "Weight (kg)",
+        "calculate": "Calculate",
+        "result": "Your BMI is",
+        "category": "Category",
+        "categoryNormal": "Normal weight",
+        "categoryOverweight": "Overweight",
+        "categoryObesity": "Obesity",
+        "categoryUnderweight": "Underweight"
+    }, 
+    "loginScreen": {
+        
+    },
+    "calorieScreen":  {
+        "title": "Calorie Burn Calculator",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "age": "Age",
+        "height": "Height (cm)",
+        "weight": "Weight (kg)",
+        "activity": "Activity",
+        "walk": "Walking",
+        "run": "Running",
+        "bike": "Cycling",
+        "swim": "Swimming",
+        "distance": "Distance (km)",
+        "duration": "Duration (minutes)",
+        "calculate": "Calculate",
+        "results": "Results",
+        "daily": "Daily Burn",
+        "weekly": "Weekly Burn"
+      }
+}
+   
