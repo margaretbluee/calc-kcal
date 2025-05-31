@@ -1,0 +1,67 @@
+<div class="container mx-auto p-6 max-w-2xl">
+    <div class="bg-white shadow-xl rounded-2xl p-6 space-y-6">
+      <h2 class="text-2xl font-bold">Set Your Weight Goal</h2>
+  
+      <div class="space-y-2">
+        <label class="block font-semibold">Would you like to:</label>
+        <div class="flex gap-4">
+          <label class="flex items-center gap-2">
+            <input type="radio" name="goalType" [(ngModel)]="goalType" value="lose" />
+            Lose Weight
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="radio" name="goalType" [(ngModel)]="goalType" value="gain" />
+            Gain Weight
+          </label>
+        </div>
+      </div>
+  
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold" for="weightAmount">How many kg?</label>
+          <input
+            id="weightAmount"
+            type="number"
+            class="form-input w-full"
+            [(ngModel)]="weightAmount"
+            placeholder="e.g. 5"
+          />
+        </div>
+  
+        <div>
+          <label class="block font-semibold" for="timeInWeeks">In how many weeks?</label>
+          <input
+            id="timeInWeeks"
+            type="number"
+            class="form-input w-full"
+            [(ngModel)]="timeInWeeks"
+            placeholder="e.g. 6"
+          />
+        </div>
+      </div>
+  
+      <div>
+        <p class="text-sm text-gray-500">
+          A kilogram of body fat is approximately 7700 kcal.
+        </p>
+        <p *ngIf="dailyKcalChange > 0" class="text-md mt-2 font-semibold">
+          You need to {{ goalType === 'lose' ? 'consume' : 'eat' }} {{ dailyKcalChange }} kcal
+          {{ goalType === 'lose' ? 'less' : 'more' }} per day.
+        </p>
+      </div>
+  
+      <div style="height: 300px" *ngIf="chartData.length > 0">
+        <canvas baseChart
+          [datasets]="chartDatasets"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [legend]="true"
+          [type]="'line'">
+        </canvas>
+      </div>
+  
+      <button class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 mt-4">
+        Continue
+      </button>
+    </div>
+  </div>

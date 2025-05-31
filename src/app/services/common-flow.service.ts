@@ -34,8 +34,8 @@ export class CommonFlowService implements OnInit, OnDestroy {
 
       case APP_STATES.AUTHENTICATE_USER:
         console.log(this.CLASSNAME, "[execute]", "[common flow started]", "[load]",  "[login screen]");
-        // this._router.navigate(['login-screen']);
-        this._router.navigate(['calorie-burn-screen']);
+        this._router.navigate(['login-screen']);
+         
 
 
         break;
@@ -51,9 +51,10 @@ export class CommonFlowService implements OnInit, OnDestroy {
         this._router.navigate(['calorie-burn-screen']);
         break;
 
-      case APP_STATES.WEIGHT_GOAL:
-
-        break;
+      // case APP_STATES.WEIGHT_GOAL:
+      //   console.log(this.CLASSNAME, "[execute]","[load]" ,"[weight goal screen]");
+      //   this._router.navigate(['weight-goal-screen']);
+      //   break;
 
       case APP_STATES.EATING_HABITS:
 

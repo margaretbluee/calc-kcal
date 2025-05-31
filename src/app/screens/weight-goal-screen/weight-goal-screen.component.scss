@@ -1,0 +1,114 @@
+
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .shadow-xl {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rounded-2xl {
+    border-radius: 1rem;
+  }
+  
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+  
+  .font-bold {
+    font-weight: bold;
+  }
+  
+  .space-y-2 > * + * {
+    margin-top: 0.5rem;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .gap-4 {
+    gap: 1rem;
+  }
+  
+  .grid {
+    display: grid;
+  }
+  
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .gap-4 {
+    gap: 1rem;
+  }
+  
+  .form-input {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    width: 100%;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280;
+  }
+  
+  .text-md {
+    font-size: 1rem;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .bg-indigo-600 {
+    background-color: #4f46e5;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .rounded {
+    border-radius: 0.375rem;
+  }
+  
+  .hover\:bg-indigo-700:hover {
+    background-color: #4338ca;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  

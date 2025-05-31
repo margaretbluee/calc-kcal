@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CalorieBurnService } from 'src/app/services/calorie-burn.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class CalorieBurnScreenComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private calorieService: CalorieBurnService
+    private calorieService: CalorieBurnService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +37,9 @@ export class CalorieBurnScreenComponent implements OnInit {
       this.summary = this.calorieService.getSummary(formData);
       this.showResults = true;
     }
+  }
+
+  navigate(){
+    this._router.navigate(['weight-goal-screen']);
   }
 }

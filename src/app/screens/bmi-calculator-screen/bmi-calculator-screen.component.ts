@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { APP_STATES } from 'src/app/models/appStates.model';
+import { AppStatesService } from 'src/app/services/app-states.service';
 import { BmiCalculationService } from 'src/app/services/bmi-calculation.service';
 
 @Component({
@@ -14,7 +16,9 @@ export class BmiCalculatorScreenComponent {
 
   constructor(
     private _formBuilder: FormBuilder, 
-    private _bmiService: BmiCalculationService) {
+    private _bmiService: BmiCalculationService,
+    private _appStateService: AppStatesService
+  ) {
     this.bmiForm = this._formBuilder.group({
       gender: ['male', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
@@ -30,5 +34,9 @@ export class BmiCalculatorScreenComponent {
       this.bmi = result.bmi;
       this.category = result.category;
     }
+  }
+
+  navigate(){
+    this._appStateService.currentState(APP_STATES.EXERSICE);
   }
 }

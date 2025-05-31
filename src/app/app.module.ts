@@ -24,7 +24,9 @@ import { CommonFlowService } from './services/common-flow.service';
 import { LoadingService } from './services/loading.service';
 import { LanguageComponent } from './components/language/language.component';
 import { CalorieBurnScreenComponent } from './screens/calorie-burn-screen/calorie-burn-screen.component';
-import { NgChartsModule } from 'ng2-charts'; 
+import { NgChartsModule } from 'ng2-charts';
+import { WeightGoalComponent } from './screens/weight-goal/weight-goal.component';
+import { WeightGoalScreenComponent } from './screens/weight-goal-screen/weight-goal-screen.component'; 
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,7 +43,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginScreenComponent,
     TestUnitConvertionScreenComponent,
     LanguageComponent,
-    CalorieBurnScreenComponent
+    CalorieBurnScreenComponent,
+    WeightGoalComponent,
+    WeightGoalScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
-    NgChartsModule ,
+    NgChartsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

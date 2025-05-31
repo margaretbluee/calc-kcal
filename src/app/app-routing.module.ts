@@ -5,13 +5,15 @@ import { TestUnitConvertionScreenComponent } from './screens/test-unit-convertio
 
 import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
 import { CalorieBurnScreenComponent } from './screens/calorie-burn-screen/calorie-burn-screen.component';
+import { WeightGoalComponent } from './screens/weight-goal/weight-goal.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login-screen', pathMatch: 'full' }, // Redirect to login
   { path: 'login-screen', component: LoginScreenComponent },
   { path: 'test-unit-convertion-screen', component: TestUnitConvertionScreenComponent },
   { path: 'bmi-calculator-screen', component: BmiCalculatorScreenComponent },
-  { path: 'calorie-burn-screen', component: CalorieBurnScreenComponent }
+  { path: 'calorie-burn-screen', component: CalorieBurnScreenComponent },
+  { path: 'weight-goal-screen', component : WeightGoalComponent}
 ];
 
 @NgModule({
