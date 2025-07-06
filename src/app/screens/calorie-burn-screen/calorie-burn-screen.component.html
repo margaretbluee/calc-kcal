@@ -1,101 +1,131 @@
 <div class="calorie-burn-container">
-    <h2>🔥 Calorie Burn Estimator</h2>
-  
+  <h2>🔥 Calorie Burn Estimator</h2>
+
+  <!-- wrapper switches from 2 → 3 columns when summary exists -->
+  <div class="cards-grid" [class.with-results]="summary">
+    <!-- ───────── ① personal info ───────── -->
+    <div class="wrapper">
+      <form [formGroup]="userForm" class="form-card">
+        <h3>👤 Personal Info</h3>
+
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="radio-group">
+            <label
+              ><input type="radio" formControlName="gender" value="male" />Male</label
+            >
+            <label
+              ><input type="radio" formControlName="gender" value="female" />Female</label
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" formControlName="age" />
+        </div>
+
+        <div class="form-group">
+          <label>Height (cm)</label>
+          <input type="number" formControlName="height" />
+        </div>
+
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" formControlName="weight" />
+        </div>
+      </form>
+    </div>
+
+    <!-- ───────── ② per‑day activity ───────── -->
     <form
-      [formGroup]="calorieForm"
-      (ngSubmit)="onSubmit()"
-      [ngClass]="{ 'form-transition': showResults }"
+      [formGroup]="activityForm"
+      (ngSubmit)="saveDayActivity()"
+      class="form-card"
     >
-      <div class="cards-flex">
-        <!-- Personal Info Card -->
-        <div class="form-card">
-          <h3>👤 Personal Info</h3>
-  
-          <div class="form-group">
-            <label>Gender</label>
-            <div class="radio-group">
-              <label><input type="radio" formControlName="gender" value="male" /> Male</label>
-              <label><input type="radio" formControlName="gender" value="female" /> Female</label>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label>Age</label>
-            <input type="number" formControlName="age" placeholder="e.g. 27" />
-          </div>
-  
-          <div class="form-group">
-            <label>Height (cm)</label>
-            <input type="number" formControlName="height" placeholder="e.g. 173" />
-          </div>
-  
-          <div class="form-group">
-            <label>Weight (kg)</label>
-            <input type="number" formControlName="weight" placeholder="e.g. 64.4" />
-          </div>
-        </div>
-  
-        <!-- Activity Info Card -->
-        <div class="form-card">
-          <h3>🏃 Activity Info</h3>
-  
-          <div class="form-group">
-            <label>Activity</label>
-            <select formControlName="activity">
-              <option value="walk">Walking</option>
-              <option value="run">Running</option>
-              <option value="bike">Biking</option>
-              <option value="swim">Swimming</option>
-            </select>
-          </div>
-  
-          <div class="form-group">
-            <label>Distance (km)</label>
-            <input type="number" formControlName="distance" placeholder="e.g. 21" />
-          </div>
-  
-          <div class="form-group">
-            <label>Duration (minutes)</label>
-            <input type="number" formControlName="duration" placeholder="e.g. 60" />
-          </div>
-        </div>
+      <!-- day radio line -->
+<!-- <div class="day-selector">
+  <label *ngFor="let day of days">
+    <input
+      type="radio"
+      name="selectedDay"
+      [value]="day"
+      [(ngModel)]="selectedDay"
+      (change)="onDayChange()"
+    />
+    {{ day }}
+  </label>
+</div> -->
+
+      <div class="day-selector">
+        <label
+          *ngFor="let d of days"
+          [class.saved]="hasData(d.key)"
+          [class.active]="d.key === selectedDay"
+          >
+ 
+         <input
+           type="radio"
+           name="day"
+           [ngModelOptions]="{ standalone: true }"
+           [value]="d.key"
+           [(ngModel)]="selectedDay"
+                   (change)="onDayChange(d)"
+         />
+          {{ d.label }}
+        </label>
       </div>
-  
-      <div class="submit-button-container">
-        <button type="submit" class="calculate-button">Calculate</button>
+
+<div *ngIf="weekData[selectedDay]">
+  <p>Activity: {{ weekData[selectedDay].activity }}</p>
+  <p>Distance: {{ weekData[selectedDay].distance }} km</p>
+  <p>Duration: {{ weekData[selectedDay].duration }} min</p>
+</div>
+
+      <h3>🏃 {{ selectedDay }} Activity</h3>
+
+      <div class="form-group">
+        <label>Activity</label>
+        <select formControlName="activity">
+          <option value="walk">Walking</option>
+          <option value="run">Running</option>
+          <option value="bike">Biking</option>
+          <option value="swim">Swimming</option>
+        </select>
       </div>
+
+      <div class="form-group">
+        <label>Distance (km)</label>
+        <input type="number" formControlName="distance" />
+      </div>
+
+      <div class="form-group">
+        <label>Duration (minutes)</label>
+        <input type="number" formControlName="duration" />
+      </div>
+
+      <button type="submit" class="btn primary">Save {{ selectedDay }}</button>
     </form>
-  
-    <div
-      *ngIf="summary"
-      class="result-container"
-      [ngClass]="{ 'result-visible': showResults }"
-    >
-      <div class="summary-cards">
-        <div class="summary-card">
-          <h3>📊 Daily Burn</h3>
-          <p>{{ summary.daily }} kcal</p>
-        </div>
-        <div class="summary-card">
-          <h3>📈 Weekly Burn</h3>
-          <p>{{ summary.weekly }} kcal</p>
-        </div>
-        <div class="summary-card">
-          <h3>⏱ Pace</h3>
-          <p>{{ summary.pace }}</p>
-        </div>
-      </div>
-  
+
+    <!-- ───────── ③ results & chart (only after Calculate) ───────── -->
+    <div *ngIf="summary" class="form-card results-card">
+      <h3>📊 Weekly Burn</h3>
+      <p class="weekly">{{ summary.weekly }} kcal</p>
+
       <div class="chart-container">
         <canvas
           baseChart
-          [datasets]="[{ data: [summary.daily, summary.weekly], label: 'Calories Burned' }]"
-          [labels]="['Daily', 'Weekly']"
-          [options]="{ responsive: true }"
+          [data]="barChartData"
+          [options]="barChartOptions"
           [type]="'bar'"
         ></canvas>
       </div>
     </div>
   </div>
 
-  <button (click)="navigate()"> NEXT > </button>
+  <!-- buttons row -->
+  <div class="buttons-row">
+    <button class="btn primary" (click)="calculate()">Calculate Weekly Burn</button>
+    <button class="btn secondary" (click)="navigate()">Next &gt;</button>
+  </div>
+</div>

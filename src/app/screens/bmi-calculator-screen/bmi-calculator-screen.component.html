@@ -1,7 +1,8 @@
-<div class="container">
-    <div class="card">
+<div class="parent" style="display: flex;">
+   <div class="container" >
+       <div class="card wrapper">
       <h2 class="title">{{'bmiScreen.bmiCalculator' | translate}}</h2>
-      <form [formGroup]="bmiForm" (ngSubmit)="calculateBMI()">
+      <form [formGroup]="bmiForm" (input)="calculateBMI()" (ngSubmit)="calculateBMI()">
         <div class="form-group">
           <label for="gender">{{'bmiScreen.gender' | translate}}</label>
           <div class="radio-group">
@@ -21,12 +22,16 @@
           <label for="weight"> {{'bmiScreen.weight' | translate}}</label>
           <input type="number" formControlName="weight" id="weight" placeholder="e.g. 65.5" />
         </div>
-        <button type="submit" [disabled]="bmiForm.invalid"> {{'bmiScreen.calculate' | translate}}</button>
+        <button class="submit" type="submit" [disabled]="bmiForm.invalid"> {{'bmiScreen.calculate' | translate}}</button>
       </form>
       <div class="result" *ngIf="bmi">
         <p> {{'bmiScreen.result' | translate}} <strong>{{ bmi }}</strong></p>
         <p class="category"> {{'bmiScreen.category' | translate}} <strong>{{ category }}</strong></p>
       </div>
-    </div>
-  </div>
-<button (click)="navigate();" >calculate burned calories</button>
+
+       <button *ngIf="bmi" class="nav-btn" (click)="navigate();" >Next</button>
+       </div>
+  
+ 
+</div>
+</div>

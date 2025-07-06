@@ -9,19 +9,24 @@
   height: 100vh;
   margin: 0 ;
   padding : 0;
-  background: rgb(24, 101, 102);
-  background: linear-gradient(0deg, rgba(14, 164, 167, 0.651) 0%, rgba(37,17,73,1) 100%);
+  background-image: url('/assets/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
 .nav-bar{
   flex: 0 1 8%;
-  box-shadow: 0 10px 20px rgb(11, 0, 36); 
+ box-shadow: 0 10px 20px rgb(38 83 36);
 
 }
 
 .app-container {
    flex:0 1 92%;
+   width:100%;
    overflow:auto;
+   overflow-x: hidden;
      color: #fff;
     display: flex;                  
     justify-content: center;     
@@ -41,11 +46,10 @@
  
  *{
      margin: 0;
-     padding: 0;
-     box-sizing: border-box;
+     
      font-family: Arial, Helvetica,  sans-serif;
  
-     background-color: rgba(190, 47, 47, 0);
+      
      }
 
      body{

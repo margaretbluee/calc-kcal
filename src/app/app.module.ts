@@ -72,7 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BmiCalculationService,
     CommonFlowService,
     LoadingService,
-    
+      NgChartsModule,
   ],
   bootstrap: [AppComponent]
 })

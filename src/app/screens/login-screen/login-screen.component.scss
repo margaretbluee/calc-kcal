@@ -1,15 +1,15 @@
 
 *{
-    font-size: large;
+     font-size: larger;
  }
 .wrapper {
     display: flex;
     flex-direction: column;
-    margin: 2%;
+margin: auto;
     align-self: center;
     margin-top: 90px;
-   min-width: 400px;
-     min-height: 500px;
+    min-width: 25vw;
+    min-height: 50vh;
 }
 .wrapper h1 {
     font-size: 36px;
@@ -17,29 +17,30 @@
 }
 
 .wrapper .input-box{
+
     position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
+     color: rgba(32, 60, 21, 0.9411764706);
 }
 
 .input-box input{
+    margin: auto;
     width: 100% ;
     height: 100% ;
     background: transparent;
     border: none ;
     outline: none;
-    border: 2px solid rgba(255,255,255, .2);
+        border: 1px solid rgb(32 60 21 / 23%);
     border-radius: 40px;
     font-size: 15px;
-    color: #fff;
-    padding-left:  20px;
-    font-size: 18px;
+     font-size: 18px;
+        color: rgba(32, 60, 21, 0.9411764706);
 }
 
 .input-box input::placeholder{
-    color: #fff;
-}
+    color: rgba(32, 60, 21, 0.9411764706);}
 
 .input-box i{
     position: absolute;
@@ -65,7 +66,7 @@
 
 .remember-forgot a {
     font-size: 2vh;
-    color: #fff;
+        color: rgba(32, 60, 21, 0.9411764706);
     margin-right: 3px;
 }
 #checkbox{
@@ -90,19 +91,20 @@ input[type="checkbox"]{
     width:100%;
      height: 45px;
      margin-top: 10%;
-     background : #c7d5f499;
+     background: rgb(154 202 142);
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 5 10px rgba(0,0,0,.1);
     cursor: pointer;
-     color: #333;
+font-size: medium;
+        color: rgba(32, 60, 21, 0.9411764706);
      
 
 }
 .wrapper .btn:hover {
-   background-color: rgba(255, 255, 255, 0.292);
-   color: white;
+   background-color: rgb(84, 129, 73);
+      color: rgba(228, 232, 226, 0.941);
 }
 .wrapper .register-link{
     font-size: 14.5px;
@@ -110,6 +112,7 @@ input[type="checkbox"]{
     margin: 20px 0 15px;
 }
 .register-link p{
+    font-size: larger;
     display: flex;
     flex-direction: column;
     margin-bottom: 0px;
@@ -119,7 +122,7 @@ input[type="checkbox"]{
 
 
 .register-link p a {
-    color: #fff;
+        color: rgba(32, 60, 21, 0.9411764706);
     text-decoration: none;
     font-weight: 600;
 }

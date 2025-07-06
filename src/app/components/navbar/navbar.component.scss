@@ -1,7 +1,9 @@
 .spacer{
     flex: 1 1 auto;
 }
-
+.nav-title{
+    font-size: 3vh;
+}
 mat-toolbar a:hover {
     background-color: rgb(35, 114, 154);
     color: white;
@@ -13,8 +15,9 @@ mat-toolbar a:hover {
  }
 
  .custom-toolbar{
-    background-color: rgba(30, 22, 63, 0.978);
-    color:#fff; position: relative; 
+    background-color: rgb(171 207 167 / 89%);
+    color: #173f24; 
+     position: relative; 
     z-index: 1000;  
     height: 100%;
 }

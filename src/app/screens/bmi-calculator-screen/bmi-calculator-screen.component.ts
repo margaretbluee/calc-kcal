@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { APP_STATES } from 'src/app/models/appStates.model';
 import { AppStatesService } from 'src/app/services/app-states.service';
 import { BmiCalculationService } from 'src/app/services/bmi-calculation.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-bmi-calculator-screen',
@@ -17,7 +18,8 @@ export class BmiCalculatorScreenComponent {
   constructor(
     private _formBuilder: FormBuilder, 
     private _bmiService: BmiCalculationService,
-    private _appStateService: AppStatesService
+    private _appStateService: AppStatesService,
+    private _store: StoreService
   ) {
     this.bmiForm = this._formBuilder.group({
       gender: ['male', Validators.required],
@@ -33,6 +35,12 @@ export class BmiCalculatorScreenComponent {
       const result = this._bmiService.calculateBMI(height, weight, gender, age);
       this.bmi = result.bmi;
       this.category = result.category;
+      this._store.setAge(age);
+      this._store.setGender(gender);
+      this._store.setHeight(height);
+      this._store.setWeight(weight) ;
+          console.log(this._store.getGender(),this._store.getAge(),this._store.getWeight(),this._store.getHeight());
+
     }
   }
 
