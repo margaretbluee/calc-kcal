@@ -65,11 +65,13 @@ export class CommonFlowService implements OnInit, OnDestroy {
         break;
 
       case APP_STATES.SUPERMARKETS_OF_PREFERENCE:
-
+        console.log(this.CLASSNAME, "[execute]","[load]" ,"[supermarket-selection-screen]");
+        this._router.navigate(['supermarket-selection-screen']);
         break;
 
       case APP_STATES.BADGET_LIMIT_INPUT:
-
+        console.log(this.CLASSNAME, "[execute]","[load]" ,"[budget-planner-screen]");
+        this._router.navigate(['budget-planner-screen']);
         break;
 
       case APP_STATES.FILTERED_RESULTS:

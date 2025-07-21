@@ -22,7 +22,7 @@
           <label for="weight"> {{'bmiScreen.weight' | translate}}</label>
           <input type="number" formControlName="weight" id="weight" placeholder="e.g. 65.5" />
         </div>
-        <button class="submit" type="submit" [disabled]="bmiForm.invalid"> {{'bmiScreen.calculate' | translate}}</button>
+        <button hidden   class="submit" type="submit" [disabled]="bmiForm.invalid"> {{'bmiScreen.calculate' | translate}}</button>
       </form>
       <div class="result" *ngIf="bmi">
         <p> {{'bmiScreen.result' | translate}} <strong>{{ bmi }}</strong></p>

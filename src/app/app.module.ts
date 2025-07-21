@@ -26,7 +26,9 @@ import { LanguageComponent } from './components/language/language.component';
 import { CalorieBurnScreenComponent } from './screens/calorie-burn-screen/calorie-burn-screen.component';
 import { NgChartsModule } from 'ng2-charts';
 import { WeightGoalComponent } from './screens/weight-goal/weight-goal.component';
-import { WeightGoalScreenComponent } from './screens/weight-goal-screen/weight-goal-screen.component'; 
+import { WeightGoalScreenComponent } from './screens/weight-goal-screen/weight-goal-screen.component';
+import { SupermarketSelectionScreenComponent } from './screens/supermarket-selection-screen/supermarket-selection-screen.component';
+import { BudgetPlannerComponent } from './screens/budget-planner/budget-planner.component'; 
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -45,7 +47,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LanguageComponent,
     CalorieBurnScreenComponent,
     WeightGoalComponent,
-    WeightGoalScreenComponent
+    WeightGoalScreenComponent,
+    SupermarketSelectionScreenComponent,
+    BudgetPlannerComponent
   ],
   imports: [
     BrowserModule,

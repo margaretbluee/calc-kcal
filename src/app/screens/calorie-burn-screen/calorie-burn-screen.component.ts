@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -25,7 +25,8 @@ export class CalorieBurnScreenComponent implements OnInit {
     private fb: FormBuilder,
     private calorieService: CalorieBurnService,
     private router: Router,
-    private _store: StoreService
+    private _store: StoreService,
+  
   ) {}
   /* ---------- forms ---------- */
   userForm!: FormGroup;
@@ -63,13 +64,15 @@ export class CalorieBurnScreenComponent implements OnInit {
 
 
   onDayChange( day: DayMeta): void {
+    console.log("selectedDay", this.selectedDay);
   // Load existing data for that day into the form
+  // this.selectedDay = day.key;
   const data = this.weekData[this.selectedDay];
   if (data) {
     this.activityForm.setValue(data);
   } else {
     this.activityForm.reset({ activity: 'walk', distance: 1, duration: 30 });
-    this.selectedDay = day.label;
+    this.selectedDay = day.key;
   }
 }
 
@@ -83,6 +86,12 @@ export class CalorieBurnScreenComponent implements OnInit {
       height: [this._store.getHeight(), [Validators.required, Validators.min(50)]],
       weight: [this._store.getWeight(), [Validators.required, Validators.min(30)]],
     });
+
+    
+    this.userForm.get("gender")?.disable();
+    this.userForm.get("age")?.disable();
+    this.userForm.get("height")?.disable();
+    this.userForm.get("weight")?.disable();
 
     /* activity info for the currently selected day */
     this.activityForm = this.fb.group({
@@ -102,6 +111,7 @@ export class CalorieBurnScreenComponent implements OnInit {
   saveDayActivity(): void {
     if (this.activityForm.invalid) return;
 
+    
     /* store the data */
     this.weekData[this.selectedDay] = this.activityForm.value as ActivityInput;
 
@@ -136,6 +146,6 @@ export class CalorieBurnScreenComponent implements OnInit {
   }
 
   navigate(): void {
-    this.router.navigate(['weight-goal-screen']);
+    this.router.navigate(['supermarket-selection-screen']);
   }
 }

@@ -8,6 +8,8 @@ export class StoreService {
     age: number = 27;
     height:  number = 173;
     weight: number = 62;
+
+    private dailyCategoryPlan: { [date: string]: string[] } = {};
   constructor() { }
 
   getGender(): 'f' | 'm'{
@@ -41,6 +43,14 @@ export class StoreService {
 
   setWeight(w: number): void{
     this.weight = w;
+  }
+
+    setDailyCategories(plan: { [date: string]: string[] }): void {
+    this.dailyCategoryPlan = plan;
+  }
+
+  getDailyCategories(): { [date: string]: string[] } {
+    return this.dailyCategoryPlan;
   }
 
 }

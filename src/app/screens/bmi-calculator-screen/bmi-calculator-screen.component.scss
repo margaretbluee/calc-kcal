@@ -35,11 +35,10 @@
   width: 100vw;
    }
   .card {
-    // background: #fff;
     padding: 2rem;
     border-radius: 1rem;
     max-width: 420px;
-    width: 100%;
+      max-height: 71vh;
     align-items: center;  
   }
   .title {
@@ -63,11 +62,12 @@
     border: 1px solid #ccc;
     border-radius: 0.5rem;
     color: black;
+    background: #ffffff9c;
   }
   .radio-group {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+display: flex
+;
+    justify-content: space-around;
   }
   .radio-group label {
     font-weight: 400;

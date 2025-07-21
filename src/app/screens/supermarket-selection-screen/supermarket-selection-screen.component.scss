@@ -1,0 +1,125 @@
+.supermarket-container {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fdfdfd, #f1f3f5);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+
+  h1 {
+    font-size: 2.2rem;
+    color: #343a40;
+    margin-bottom: 32px;
+  }
+
+  .supermarket-options {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 32px;
+
+    button {
+      padding: 14px 24px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background-color: #ffffff;
+      color: #343a40;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+      &:hover {
+        background-color: #f1f3f5;
+        border-color: #ced4da;
+        transform: translateY(-1px);
+      }
+
+      &.selected {
+        background-color: #0d6efd;
+        color: #ffffff;
+        border-color: #0b5ed7;
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+      }
+    }
+  }
+
+  .submit-button {
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    background-color: #198754;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 500;
+
+    &:hover {
+      background-color: #157347;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background-color: #adb5bd;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: #6c757d;
+  text-align: center;
+  margin-top: 120px;
+  font-family: 'Segoe UI', sans-serif;
+  animation: pulse 1.2s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .supermarket-container {
+    padding: 24px;
+    h1 {
+      font-size: 1.6rem;
+    }
+
+    .supermarket-options {
+      button {
+        font-size: 1rem;
+      }
+    }
+
+    .submit-button {
+      width: 100%;
+    }
+  }
+}

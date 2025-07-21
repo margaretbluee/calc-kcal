@@ -4,7 +4,7 @@
   <!-- wrapper switches from 2 → 3 columns when summary exists -->
   <div class="cards-grid" [class.with-results]="summary">
     <!-- ───────── ① personal info ───────── -->
-    <div class="wrapper">
+    <div class="wrapper"  >
       <form [formGroup]="userForm" class="form-card">
         <h3>👤 Personal Info</h3>
 
@@ -12,50 +12,39 @@
           <label>Gender</label>
           <div class="radio-group">
             <label
-              ><input type="radio" formControlName="gender" value="male" />Male</label
+              ><input  type="radio" formControlName="gender" value="male" />Male</label
             >
             <label
-              ><input type="radio" formControlName="gender" value="female" />Female</label
+              ><input  type="radio" formControlName="gender" value="female" />Female</label
             >
           </div>
         </div>
 
         <div class="form-group">
           <label>Age</label>
-          <input type="number" formControlName="age" />
+          <input readonly type="number" formControlName="age" />
         </div>
 
         <div class="form-group">
           <label>Height (cm)</label>
-          <input type="number" formControlName="height" />
+          <input readonly type="number" formControlName="height" />
         </div>
 
         <div class="form-group">
           <label>Weight (kg)</label>
-          <input type="number" formControlName="weight" />
+          <input readonly type="number" formControlName="weight" />
         </div>
       </form>
     </div>
 
     <!-- ───────── ② per‑day activity ───────── -->
+         <div class="wrapper"  >
     <form
       [formGroup]="activityForm"
-      (ngSubmit)="saveDayActivity()"
+      (ngSubmit)="saveDayActivity(); calculate()"
       class="form-card"
     >
-      <!-- day radio line -->
-<!-- <div class="day-selector">
-  <label *ngFor="let day of days">
-    <input
-      type="radio"
-      name="selectedDay"
-      [value]="day"
-      [(ngModel)]="selectedDay"
-      (change)="onDayChange()"
-    />
-    {{ day }}
-  </label>
-</div> -->
+ 
 
       <div class="day-selector">
         <label
@@ -76,11 +65,11 @@
         </label>
       </div>
 
-<div *ngIf="weekData[selectedDay]">
+<!-- <div *ngIf="weekData[selectedDay]">
   <p>Activity: {{ weekData[selectedDay].activity }}</p>
   <p>Distance: {{ weekData[selectedDay].distance }} km</p>
   <p>Duration: {{ weekData[selectedDay].duration }} min</p>
-</div>
+</div> -->
 
       <h3>🏃 {{ selectedDay }} Activity</h3>
 
@@ -104,28 +93,32 @@
         <input type="number" formControlName="duration" />
       </div>
 
-      <button type="submit" class="btn primary">Save {{ selectedDay }}</button>
+      <button   type="submit" class="btn primary">Save {{ selectedDay }}</button>
     </form>
+    </div>
 
     <!-- ───────── ③ results & chart (only after Calculate) ───────── -->
-    <div *ngIf="summary" class="form-card results-card">
-      <h3>📊 Weekly Burn</h3>
-      <p class="weekly">{{ summary.weekly }} kcal</p>
-
-      <div class="chart-container">
-        <canvas
-          baseChart
-          [data]="barChartData"
-          [options]="barChartOptions"
-          [type]="'bar'"
-        ></canvas>
-      </div>
-    </div>
+         <div class="wrapper" >
+            <div *ngIf="summary" class="form-card results-card">
+              <h3>📊 Weekly Burn</h3>
+              <p class="weekly">{{ summary.weekly }} kcal</p>
+            
+              <div class="chart-container">
+                <canvas
+                  baseChart
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [type]="'bar'"
+                ></canvas>
+              </div>
+            </div>
+              <!-- <div class="buttons-row"> -->
+    <!-- <button class="btn primary" (click)="calculate()">Calculate Weekly Burn</button> -->
+    <button class="btn secondary" (click)="navigate()">Next &gt;</button>
+  <!-- </div> -->
+          </div>
   </div>
 
   <!-- buttons row -->
-  <div class="buttons-row">
-    <button class="btn primary" (click)="calculate()">Calculate Weekly Burn</button>
-    <button class="btn secondary" (click)="navigate()">Next &gt;</button>
-  </div>
+
 </div>

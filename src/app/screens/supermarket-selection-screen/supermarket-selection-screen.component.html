@@ -1,0 +1,23 @@
+ 
+  <div class="supermarket-container wrapper" *ngIf="!loading; else loadingTpl">
+    <h1>Select Your Supermarkets</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="supermarket-options">
+        <button
+          *ngFor="let market of supermarkets"
+          type="button"
+          [class.selected]="isSelected(market)"
+          (click)="toggleSelection(market)"
+        >
+          {{ market }}
+        </button>
+      </div>
+
+      <button type="submit" class="submit-button" [disabled]="form.value.selectedSupermarkets.length === 0">
+        Continue
+      </button>
+    </form>
+ </div> 
+<ng-template #loadingTpl>
+  <div class="loading-message">Loading supermarkets...</div>
+</ng-template>
