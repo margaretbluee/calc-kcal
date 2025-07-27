@@ -1,0 +1,37 @@
+<div class="container">
+  <aside class="sidebar">
+    <h2>Supermarkets</h2>
+    <ul class="supermarket-names">
+      <li *ngFor="let market of supermarkets"
+          [class.active]="selectedSupermarket?.id === market.id"
+          (click)="selectSupermarket(market)">
+        {{ market.name }}
+      </li>
+    </ul>
+  </aside>
+
+  <main class="product-grid">
+    <div *ngIf="products.length === 0 && selectedSupermarket" class="no-products">
+      <p>No products found for this supermarket.</p>
+    </div>
+
+    <div class="card" *ngFor="let product of products">
+      <div class="image-wrapper">
+        <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
+        <div class="badge" *ngIf="product.discount">SALE</div>
+      </div>
+      <div class="info">
+        <h3>{{ product.name }}</h3>
+        <p class="category">{{ product.category }}</p>
+        <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
+        <p class="price">{{ product.price | currency: 'EUR' }}</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="pagination" *ngIf="totalPages > 1">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
+</div>

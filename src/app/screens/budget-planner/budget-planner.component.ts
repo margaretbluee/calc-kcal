@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/services/store.service';
 import { addDays, format } from 'date-fns' ;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-budget-planner',
@@ -15,7 +16,7 @@ export class BudgetPlannerComponent {
   categories = ['Meat', 'Fish', 'Fruit', 'Vegetable', 'Pasta', 'Dairy', 'Snacks'];
   daySelections: { [day: string]: string[] } = {};
 
-  constructor(private fb: FormBuilder, private store: StoreService) {
+  constructor(private router: Router,private fb: FormBuilder, private store: StoreService) {
     this.form = this.fb.group({
       budget: [null, [Validators.required, Validators.min(1)]],
       daysCount: [null, [Validators.required, Validators.min(1)]],
@@ -48,5 +49,9 @@ export class BudgetPlannerComponent {
 
   isSelected(category: string): boolean {
     return this.daySelections[this.selectedDay!]?.includes(category);
+  }
+
+    navigate(): void {
+    this.router.navigate(['result-screen']);
   }
 }

@@ -1,124 +1,135 @@
 <div class="calorie-burn-container">
-  <h2>🔥 Calorie Burn Estimator</h2>
+  <h2>{{ "calorieBurnScreen.title" | translate }}</h2>
 
   <!-- wrapper switches from 2 → 3 columns when summary exists -->
   <div class="cards-grid" [class.with-results]="summary">
     <!-- ───────── ① personal info ───────── -->
-    <div class="wrapper"  >
+    <div class="wrapper">
       <form [formGroup]="userForm" class="form-card">
-        <h3>👤 Personal Info</h3>
+        <h3>{{ "calorieBurnScreen.personal" | translate }}</h3>
 
         <div class="form-group">
-          <label>Gender</label>
+          <label>{{ "calorieBurnScreen.gender" | translate }}</label>
           <div class="radio-group">
             <label
-              ><input  type="radio" formControlName="gender" value="male" />Male</label
+              ><input type="radio" formControlName="gender" value="male" />{{
+                "calorieBurnScreen.male" | translate
+              }}</label
             >
             <label
-              ><input  type="radio" formControlName="gender" value="female" />Female</label
+              ><input type="radio" formControlName="gender" value="female" />{{
+                "calorieBurnScreen.female" | translate
+              }}</label
             >
           </div>
         </div>
 
         <div class="form-group">
-          <label>Age</label>
+          <label>{{ "calorieBurnScreen.age" | translate }}</label>
           <input readonly type="number" formControlName="age" />
         </div>
 
         <div class="form-group">
-          <label>Height (cm)</label>
+          <label>{{ "calorieBurnScreen.height" | translate }}</label>
           <input readonly type="number" formControlName="height" />
         </div>
 
         <div class="form-group">
-          <label>Weight (kg)</label>
+          <label>{{ "calorieBurnScreen.weight" | translate }}</label>
           <input readonly type="number" formControlName="weight" />
         </div>
       </form>
     </div>
 
     <!-- ───────── ② per‑day activity ───────── -->
-         <div class="wrapper"  >
-    <form
-      [formGroup]="activityForm"
-      (ngSubmit)="saveDayActivity(); calculate()"
-      class="form-card"
-    >
- 
-
-      <div class="day-selector">
-        <label
-          *ngFor="let d of days"
-          [class.saved]="hasData(d.key)"
-          [class.active]="d.key === selectedDay"
+    <div class="wrapper">
+      <form
+        [formGroup]="activityForm"
+        (ngSubmit)="saveDayActivity(); calculate()"
+        class="form-card"
+      >
+        <div class="day-selector">
+          <label
+            *ngFor="let d of days"
+            [class.saved]="hasData(d.key)"
+            [class.active]="d.key === selectedDay"
           >
- 
-         <input
-           type="radio"
-           name="day"
-           [ngModelOptions]="{ standalone: true }"
-           [value]="d.key"
-           [(ngModel)]="selectedDay"
-                   (change)="onDayChange(d)"
-         />
-          {{ d.label }}
-        </label>
-      </div>
+            <input
+              type="radio"
+              name="day"
+              [ngModelOptions]="{ standalone: true }"
+              [value]="d.key"
+              [(ngModel)]="selectedDay"
+              (change)="onDayChange(d)"
+            />
+            <div *ngIf="currentLang === 'en'">
+              {{ d.labelEn }}
+            </div>
+            <div *ngIf="currentLang === 'el'">
+              {{ d.labelEl }}
+            </div>
+          </label>
+        </div>
 
-<!-- <div *ngIf="weekData[selectedDay]">
-  <p>Activity: {{ weekData[selectedDay].activity }}</p>
-  <p>Distance: {{ weekData[selectedDay].distance }} km</p>
-  <p>Duration: {{ weekData[selectedDay].duration }} min</p>
-</div> -->
+        <h3>{{ "calorieBurnScreen.weekly" | translate }}</h3>
 
-      <h3>🏃 {{ selectedDay }} Activity</h3>
+        <div class="form-group">
+          <label>{{ "calorieBurnScreen.activity" | translate }}</label>
+          <select formControlName="activity">
+            <option value="walk">
+              {{ "calorieBurnScreen.walk" | translate }}
+            </option>
+            <option value="run">
+              {{ "calorieBurnScreen.run" | translate }}
+            </option>
+            <option value="bike">
+              {{ "calorieBurnScreen.bike" | translate }}
+            </option>
+            <option value="swim">
+              {{ "calorieBurnScreen.swim" | translate }}
+            </option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Activity</label>
-        <select formControlName="activity">
-          <option value="walk">Walking</option>
-          <option value="run">Running</option>
-          <option value="bike">Biking</option>
-          <option value="swim">Swimming</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>{{ "calorieBurnScreen.distance" | translate }}</label>
+          <input type="number" formControlName="distance" />
+        </div>
 
-      <div class="form-group">
-        <label>Distance (km)</label>
-        <input type="number" formControlName="distance" />
-      </div>
+        <div class="form-group">
+          <label>{{ "calorieBurnScreen.duration" | translate }}</label>
+          <input type="number" formControlName="duration" />
+        </div>
 
-      <div class="form-group">
-        <label>Duration (minutes)</label>
-        <input type="number" formControlName="duration" />
-      </div>
-
-      <button   type="submit" class="btn primary">Save {{ selectedDay }}</button>
-    </form>
+        <button type="submit" class="btn primary">
+          {{
+            "calorieBurnScreen.saveSelectedDay"
+              | translate : { selectedDay: selectedDay }
+          }}
+        </button>
+      </form>
     </div>
 
     <!-- ───────── ③ results & chart (only after Calculate) ───────── -->
-         <div class="wrapper" >
-            <div *ngIf="summary" class="form-card results-card">
-              <h3>📊 Weekly Burn</h3>
-              <p class="weekly">{{ summary.weekly }} kcal</p>
-            
-              <div class="chart-container">
-                <canvas
-                  baseChart
-                  [data]="barChartData"
-                  [options]="barChartOptions"
-                  [type]="'bar'"
-                ></canvas>
-              </div>
-            </div>
-              <!-- <div class="buttons-row"> -->
-    <!-- <button class="btn primary" (click)="calculate()">Calculate Weekly Burn</button> -->
-    <button class="btn secondary" (click)="navigate()">Next &gt;</button>
-  <!-- </div> -->
-          </div>
+    <div class="wrapper" *ngIf="summary">
+      <div class="form-card results-card">
+        <h3>{{ "calorieBurnScreen.weekly" | translate }}</h3>
+        <p class="weekly">{{ summary.weekly }} kcal</p>
+
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="'bar'"
+          ></canvas>
+        </div>
+      </div>
+      <!-- <div class="buttons-row"> -->
+      <!-- <button class="btn primary" (click)="calculate()">Calculate Weekly Burn</button> -->
+      <!-- </div> -->
+    </div>
+
+    <!-- buttons row -->
   </div>
-
-  <!-- buttons row -->
-
 </div>

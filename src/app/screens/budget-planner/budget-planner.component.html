@@ -1,14 +1,14 @@
 <div class="budget-container">
-  <h1>Plan Your Supermarket Budget</h1>
+  <h1>{{'budgetPlanner.plan' | translate}}</h1>
 
   <form [formGroup]="form" (ngSubmit)="generateDays()" class="budget-form">
-    <input type="number" placeholder="Enter your budget (€)" formControlName="budget" />
-    <input type="number" placeholder="Days to cover" formControlName="daysCount" />
-    <button type="submit" [disabled]="form.invalid">Generate Days</button>
+    <input type="number" placeholder="{{'budgetPlanner.plan' | translate}}" formControlName="budget" />
+    <input type="number" placeholder="{{'budgetPlanner.daysToCover' | translate}}" formControlName="daysCount" />
+    <button type="submit" [disabled]="form.invalid">{{'budgetPlanner.generateDays' | translate}}</button>
   </form>
 
   <div class="days-selector" *ngIf="days.length">
-    <h2>Select a Day</h2>
+    <h2>{{'budgetPlanner.selectDay' | translate}}</h2>
     <div class="days">
       <button
         *ngFor="let day of days"
@@ -21,7 +21,7 @@
   </div>
 
   <div *ngIf="selectedDay" class="category-selector">
-    <h3>Categories for {{ selectedDay }}</h3>
+  <h3>{{ 'budgetPlanner.selectedDay' | translate: { selectedDay: selectedDay } }}</h3>
     <div class="checkboxes">
       <label *ngFor="let cat of categories">
         <input
@@ -34,3 +34,4 @@
     </div>
   </div>
 </div>
+    <button class="btn secondary" (click)="navigate()">{{'navigation.next' | translate}}</button>

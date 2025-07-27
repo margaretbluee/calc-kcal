@@ -8,7 +8,7 @@ export class APP_STATES {
     static readonly EATING_HABITS: number = 1005;
     static readonly INTOLERANCE_AND_HEALTH_CHECK: number = 1006;
     static readonly SUPERMARKETS_OF_PREFERENCE: number = 1007;
-    static readonly BADGET_LIMIT_INPUT: number = 1007;
-    static readonly FILTERED_RESULTS: number = 1008;
-    static readonly PROPOSALS: number = 1009;
+    static readonly BADGET_LIMIT_INPUT: number = 1008;
+    static readonly FILTERED_RESULTS: number = 1009;
+    static readonly PROPOSALS: number = 1010;
 }

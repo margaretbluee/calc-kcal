@@ -1,0 +1,155 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+  background:#ffffff94;
+}
+
+.supermarket-names{
+  color: black;
+}
+
+.sidebar {
+  width: 220px;
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0.6rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+
+      &.active {
+        background: #74d35cc2;
+        color: white;
+      }
+
+      &:hover:not(.active) {
+        background: #e9ecef;
+      }
+    }
+  }
+}
+
+.product-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .image-wrapper {
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4f;
+      color: white;
+      font-weight: bold;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+  }
+
+  .info {
+    padding: 1rem;
+
+    h3 {
+      font-size: 1rem;
+      margin: 0 0 0.4rem;
+      color: #222;
+    }
+
+    .category {
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .kcal {
+      font-size: 0.75rem;
+      color: #999;
+    }
+
+    .price {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #324128;
+      font-size: 1rem;
+    }
+  }
+}
+
+.pagination {
+  margin: 2rem auto 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-weight: 500;
+    color: #333;
+  }
+}
+
+.no-products {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 1.2rem;
+}

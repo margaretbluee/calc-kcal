@@ -75,7 +75,8 @@ export class CommonFlowService implements OnInit, OnDestroy {
         break;
 
       case APP_STATES.FILTERED_RESULTS:
-
+        console.log(this.CLASSNAME, "[execute]","[load]" ,"[result-screen]");
+        this._router.navigate(['result-screen']);
         break;
 
       case APP_STATES.PROPOSALS:

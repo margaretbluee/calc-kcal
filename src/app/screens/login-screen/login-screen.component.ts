@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APP_STATES } from 'src/app/models/appStates.model';
-import { User } from 'src/app/models/user';
 import { AppStatesService } from 'src/app/services/app-states.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -18,6 +17,7 @@ export class LoginScreenComponent {
   password: string = '';
   loginForm!: FormGroup;
   loading: boolean = false; //loading spinner status
+  register: boolean = false;
 
   constructor(
     private _loadingService: LoadingService,
@@ -27,6 +27,7 @@ export class LoginScreenComponent {
   ) { }
 
   ngOnInit() {
+    console.log("this.register", this.register);
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -35,6 +36,27 @@ export class LoginScreenComponent {
       ]),
     });
   }
+
+toggleRegister(): void {
+  this.register = !this.register;
+}
+
+submitRegister(): void {
+  if (this.loginForm.valid) {
+    this.loading = true;
+    const user = this.loginForm.value;
+
+    // Simulate API call
+    console.log("Registering user", user);
+    setTimeout(() => {
+      this.loading = false;
+      alert('Registered successfully!');
+      this.toggleRegister(); // Switch back to login
+      this.loginForm.reset();
+    }, 1000);
+  }
+}
+
 
   // onLogin() {
   //   //checks if the login form is valid before proceeding

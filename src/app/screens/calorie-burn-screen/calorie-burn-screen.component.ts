@@ -8,11 +8,17 @@ import {
 
 import { ChartOptions } from 'chart.js';
 import { StoreService } from 'src/app/services/store.service';
+import { TranslateService } from '@ngx-translate/core';
 
-interface DayMeta {
+interface DayMeta  {
   key: string;   // “Monday”
-  label: string; // “M”
+  labelEn: string; // “M”
+    labelEl: string; // “M”
+
+
 }
+
+ 
 
 @Component({
   selector: 'calorie-burn-screen',
@@ -26,21 +32,23 @@ export class CalorieBurnScreenComponent implements OnInit {
     private calorieService: CalorieBurnService,
     private router: Router,
     private _store: StoreService,
+    private _translate: TranslateService
   
   ) {}
   /* ---------- forms ---------- */
   userForm!: FormGroup;
   activityForm!: FormGroup;
+  currentLang: string = '';
 
   /* ---------- day handling ---------- */
-  days: DayMeta[] = [
-    { key: 'Monday',    label: 'M' },
-    { key: 'Tuesday',   label: 'T' },
-    { key: 'Wednesday', label: 'W' },
-    { key: 'Thursday',  label: 'T' },
-    { key: 'Friday',    label: 'F' },
-    { key: 'Saturday',  label: 'S' },
-    { key: 'Sunday',    label: 'S' },
+  days: DayMeta[]  = [
+    { key: 'Monday',    labelEn: 'M',    labelEl: 'Δ' },
+    { key: 'Tuesday',   labelEn: 'T',    labelEl: 'Τ' },
+    { key: 'Wednesday', labelEn: 'W' ,    labelEl: 'Τ'},
+    { key: 'Thursday',  labelEn: 'T' ,    labelEl: 'Π'},
+    { key: 'Friday',    labelEn: 'F',    labelEl: 'Π' },
+    { key: 'Saturday',  labelEn: 'S',    labelEl: 'Σ' },
+    { key: 'Sunday',    labelEn: 'S',    labelEl: 'Κ' },
   ];
   selectedDay = this.days[0].key;
 
@@ -78,6 +86,11 @@ export class CalorieBurnScreenComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this._translate.onLangChange.subscribe((data) => {
+      console.log(data);
+      this.currentLang =  this._translate.currentLang;
+
+    })
     /* personal info */
     console.log(this._store.getGender(),this._store.getAge(),this._store.getWeight(),this._store.getHeight());
     this.userForm = this.fb.group({

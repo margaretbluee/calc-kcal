@@ -1,11 +1,11 @@
 <div class="lang-selector" (click)="toggleDropdown()">
-    <img [src]="currentLang === 'en' ? 'assets/images/flag-uk.png' : 'assets/media/flag-greek.png'" alt="Language" />
+    <img [src]="currentLang === 'en' ? 'assets/media/flag_usa.png' : 'assets/media/flag_greek.png'" alt="Language" />
     <ul class="dropdown" *ngIf="dropdownOpen">
       <li (click)="switchLanguage('en')">
-        <img src="assets/media/flag-usa.png" alt="English" /> English
+        <img src="assets/media/flag_usa.png" alt="English" /> English
       </li>
       <li (click)="switchLanguage('el')">
-        <img src="assets/media/flag-greek.png" alt="Greek" /> Ελληνικά
+        <img src="assets/media/flag_greek.png" alt="Greek" /> Ελληνικά
       </li>
     </ul>
   </div>

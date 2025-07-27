@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.CLASSNAME, "common flow begins");
 
-    this._appStateService.currentState(APP_STATES.BADGET_LIMIT_INPUT);
+    this._appStateService.currentState(APP_STATES.AUTHENTICATE_USER);
   }
 
   ngOnDestroy(): void {

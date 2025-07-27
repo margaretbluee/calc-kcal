@@ -10,7 +10,37 @@ interface SupermarketResponse {
     supermarketProducts: any;
   }>;
 }
+interface Supermarket {
+  id: number;
+  name: string;
+  supermarketProducts: any;
+}
 
+export interface ISuperMarketProducts  {
+  $id: string;
+  $values: any[]
+}
+
+export interface Product {
+  $id: string;
+  id: number;
+  name: string;
+  price: number;
+  imageBase64: string;
+  discount: boolean;
+  category: string;
+  kcal: number | null;
+  supermarketProducts: ISuperMarketProducts
+}
+
+export interface PagedResult<T> {
+  $id: string,
+  totalCount: number;
+  items:{
+    $id: string,
+    $values:    T[];
+  }
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -19,9 +49,24 @@ export class SupermarketService {
 
   constructor(private http: HttpClient) {}
 
-  getSupermarkets(): Observable<string[]> {
-    return this.http.get<SupermarketResponse>(this.apiUrl).pipe(
-      map(response => response.$values.map(item => item.name))
+  getSupermarkets(): Observable<Supermarket[]> {
+    return this.http.get<{ $id: string; $values: Supermarket[] }>(this.apiUrl).pipe(
+      map(response => response.$values)
     );
   }
+
+    // Used by SupermarketSelectionScreenComponent
+  getSupermarketNames(): Observable<string[]> {
+    return this.getSupermarkets().pipe(
+      map(supermarkets => supermarkets.map(market => market.name))
+    );
+  }
+
+getProductsBySupermarket(supermarketId: number, page: number, pageSize: number): Observable<PagedResult<Product>> {
+  return this.http.get<PagedResult<Product>>(
+    `${this.apiUrl}/${supermarketId}/products?page=${page}&pageSize=${pageSize}`
+  );
+}
+
+ 
 }

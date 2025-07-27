@@ -24,17 +24,17 @@ export class SupermarketSelectionScreenComponent {
   }
 
   ngOnInit(): void {
-    this.supermarketService.getSupermarkets().subscribe({
-      next: (names) => {
-        this.supermarkets = names;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load supermarkets:', err);
-        this.loading = false;
-      }
-    });
-  }
+  this.supermarketService.getSupermarketNames().subscribe({
+    next: (names) => {
+      this.supermarkets = names;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Failed to load supermarkets:', err);
+      this.loading = false;
+    }
+  });
+}
 
   toggleSelection(market: string): void {
     const selected = this.form.value.selectedSupermarkets;

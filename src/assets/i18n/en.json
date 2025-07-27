@@ -18,8 +18,22 @@
     "loginScreen": {
         
     },
-    "calorieScreen":  {
+    "budgetPlanner":{
+        "generateDays": "Generate days",
+        "selectDay": "Select day",
+        "selectedDay": "Categories for  {{selectedDay}}",
+        "plan": "Plan your budget",
+        "enterBudget": "Enter budget",
+        "daysToCover": "Days to cover"
+    },
+    "navigation": {
+        "next": "Next"
+    },
+    "calorieBurnScreen":  {
         "title": "Calorie Burn Calculator",
+        "personal" : "👤Personal Info",
+        "selectedActivity": "🏃 {{selectedDay}} Activity",
+        "saveSelectedDay": "Save {{selectedDay}}",
         "gender": "Gender",
         "male": "Male",
         "female": "Female",
@@ -36,7 +50,8 @@
         "calculate": "Calculate",
         "results": "Results",
         "daily": "Daily Burn",
-        "weekly": "Weekly Burn"
+        "weekly": "🔥 Weekly Burn"
       }
+ 
 }
    

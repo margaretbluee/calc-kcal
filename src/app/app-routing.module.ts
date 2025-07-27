@@ -8,6 +8,7 @@ import { CalorieBurnScreenComponent } from './screens/calorie-burn-screen/calori
 import { WeightGoalComponent } from './screens/weight-goal/weight-goal.component';
 import { SupermarketSelectionScreenComponent } from './screens/supermarket-selection-screen/supermarket-selection-screen.component';
 import { BudgetPlannerComponent } from './screens/budget-planner/budget-planner.component';
+import { ResultsScreenComponent } from './screens/results-screen/results-screen.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login-screen', pathMatch: 'full' }, // Redirect to login
@@ -16,8 +17,9 @@ const routes: Routes = [
   { path: 'bmi-calculator-screen', component: BmiCalculatorScreenComponent },
   { path: 'calorie-burn-screen', component: CalorieBurnScreenComponent },
   { path: 'weight-goal-screen', component : WeightGoalComponent},
-    { path: 'supermarket-selection-screen', component : SupermarketSelectionScreenComponent},
-  {path : 'budget-planner-screen', component: BudgetPlannerComponent}  
+  { path: 'supermarket-selection-screen', component : SupermarketSelectionScreenComponent},
+  {path : 'budget-planner-screen', component: BudgetPlannerComponent},
+  {path: 'result-screen', component: ResultsScreenComponent}  
 ];
 
 @NgModule({
