@@ -29,8 +29,9 @@ import { WeightGoalComponent } from './screens/weight-goal/weight-goal.component
 import { WeightGoalScreenComponent } from './screens/weight-goal-screen/weight-goal-screen.component';
 import { SupermarketSelectionScreenComponent } from './screens/supermarket-selection-screen/supermarket-selection-screen.component';
 import { BudgetPlannerComponent } from './screens/budget-planner/budget-planner.component';
-import { ResultsScreenComponent } from './screens/results-screen/results-screen.component'; 
-
+import { ResultsScreenComponent } from './screens/results-screen/results-screen.component';
+import { AlertPopupComponent } from './components/alert-popup/alert-popup.component'; 
+import { MatDividerModule } from '@angular/material/divider';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WeightGoalScreenComponent,
     SupermarketSelectionScreenComponent,
     BudgetPlannerComponent,
-     ResultsScreenComponent
+     ResultsScreenComponent,
+     AlertPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     HttpClientModule,
     NgChartsModule,
+    MatDividerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -24,7 +24,10 @@
         "selectedDay": "Categories for  {{selectedDay}}",
         "plan": "Plan your budget",
         "enterBudget": "Enter budget",
-        "daysToCover": "Days to cover"
+        "daysToCover": "Days to cover",
+        "budget": "Budget",
+        "days": "Days",
+        "budgetInput": "10€" 
     },
     "navigation": {
         "next": "Next"

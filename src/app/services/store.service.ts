@@ -4,13 +4,38 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StoreService {
+    constructor() { }
     gender: 'f' | 'm' = 'f';
     age: number = 27;
     height:  number = 173;
     weight: number = 62;
 
+    private budget: number | null = null;
+private daysCount: number | null = null;
+setBudget(budget: number): void {
+  this.budget = budget;
+}
+
+getBudget(): number | null {
+  return this.budget;
+}
+
+setDaysCount(count: number): void {
+  this.daysCount = count;
+}
+
+getDaysCount(): number | null {
+  return this.daysCount;
+}
     private dailyCategoryPlan: { [date: string]: string[] } = {};
-  constructor() { }
+
+    setDailyCategories(plan: { [date: string]: string[] }): void {
+    this.dailyCategoryPlan = plan;
+  }
+
+  getDailyCategories(): { [date: string]: string[] } {
+    return this.dailyCategoryPlan;
+  }
 
   getGender(): 'f' | 'm'{
     return this.gender;
@@ -45,12 +70,5 @@ export class StoreService {
     this.weight = w;
   }
 
-    setDailyCategories(plan: { [date: string]: string[] }): void {
-    this.dailyCategoryPlan = plan;
-  }
-
-  getDailyCategories(): { [date: string]: string[] } {
-    return this.dailyCategoryPlan;
-  }
 
 }

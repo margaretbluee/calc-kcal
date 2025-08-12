@@ -35,6 +35,7 @@ export class LoginScreenComponent {
         Validators.minLength(6),
       ]),
     });
+
   }
 
 toggleRegister(): void {
@@ -87,3 +88,7 @@ submitRegister(): void {
     this._appStatesService.currentState(APP_STATES.BMI_CALCULATION);
   }
 }
+
+
+
+ 

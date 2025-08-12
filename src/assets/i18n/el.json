@@ -21,7 +21,10 @@
         "selectedDay": "Κατηγορίες {{selectedDay}}",
         "plan": "Διαθέσιμο budget",
         "enterBudget": "Διαθέσιμο ποσό",
-        "daysToCover": "Διάρκεια"
+        "daysToCover": "Διάρκεια",
+         "budget": "Ποσό",
+        "days": "Μέρες",
+        "budgetInput": "10€" 
     },
     "navigation": {
         "next": "Επόμενο"

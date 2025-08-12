@@ -1,0 +1,54 @@
+.toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  min-width: 280px;
+  max-width: 320px;
+  background-color: var(--toast-bg-color);  // we’ll set this dynamically
+  color: #fff;
+  border-left: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 16px 20px 12px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  z-index: 1100;
+  user-select: none;
+  position: fixed;
+ 
+}
+
+.message {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.progress-bar {
+  height: 4px;
+  border-radius: 3px;
+  transition: width 50ms linear;
+  margin-bottom: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 20px;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  user-select: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+  color: #ddd;
+}
