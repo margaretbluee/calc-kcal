@@ -62,9 +62,55 @@ export class SupermarketService {
     );
   }
 
-getProductsBySupermarket(supermarketId: number, page: number, pageSize: number): Observable<PagedResult<Product>> {
+getProductsBySupermarket(
+  supermarketId: number,
+  page: number,
+  pageSize: number,
+  category?: string | null,
+  priceMin?: number | null,
+  priceMax?: number | null,
+  kcalMin?: number | null,
+  kcalMax?: number | null,
+  sortBy?: string
+): Observable<PagedResult<Product>> {
+  const params: any = { page, pageSize };
+  if (category) params.category = category;
+  if (priceMin !== null) params.priceMin = priceMin;
+  if (priceMax !== null) params.priceMax = priceMax;
+  if (kcalMin !== null) params.kcalMin = kcalMin;
+  if (kcalMax !== null) params.kcalMax = kcalMax;
+  if (sortBy) params.sortBy = sortBy;
+
   return this.http.get<PagedResult<Product>>(
-    `${this.apiUrl}/${supermarketId}/products?page=${page}&pageSize=${pageSize}`
+    `${this.apiUrl}/${supermarketId}/products`,
+    { params }
+  );
+}
+
+getProductsByCategory(
+  category: string,
+  page: number,
+  pageSize: number,
+  priceMin?: number | null,
+  priceMax?: number | null,
+  kcalMin?: number | null,
+  kcalMax?: number | null,
+  sortBy?: string
+): Observable<PagedResult<Product>> {
+  const params: any = {
+    page,
+    pageSize,
+    category,
+    sortBy
+  };
+  if (priceMin !== null) params.priceMin = priceMin;
+  if (priceMax !== null) params.priceMax = priceMax;
+  if (kcalMin !== null) params.kcalMin = kcalMin;
+  if (kcalMax !== null) params.kcalMax = kcalMax;
+
+  return this.http.get<PagedResult<Product>>(
+    `${this.apiUrl}/products-by-category`,
+    { params }
   );
 }
 

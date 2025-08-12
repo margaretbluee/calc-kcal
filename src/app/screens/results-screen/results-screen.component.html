@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <aside class="sidebar">
     <h2>Supermarkets</h2>
     <ul class="supermarket-names">
@@ -34,4 +34,88 @@
   <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
   <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
+</div> -->
+<div class="container">
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    
+    <h3>Supermarkets</h3>
+    <ul>
+      <li *ngFor="let sm of supermarkets"
+          (click)="onSelectSupermarket(sm)"
+          [class.active]="selectedSupermarket === sm">
+        {{ sm.name }}
+      </li>
+    </ul>
+    <div class="meal-plan">
+      <h2>Meal Plan</h2>
+      <div *ngFor="let day of daysList" class="day-block">
+        <h3 (click)="selectDay(day)" [class.active]="selectedDay === day">{{ day }}</h3>
+        <ul *ngIf="selectedDay === day">
+          <li *ngFor="let category of dailyCategories[day]"
+              [class.active]="selectedCategory === category"
+              (click)="selectCategory(category)">
+            {{ category }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filters">
+      <h2>Filters</h2>
+      <div class="filter-group">
+        <label>Price (€)</label>
+        <input type="number" [(ngModel)]="priceMin" placeholder="Min">
+        <input type="number" [(ngModel)]="priceMax" placeholder="Max">
+      </div>
+
+      <div class="filter-group">
+        <label>Kcal / 100g</label>
+        <input type="number" [(ngModel)]="kcalMin" placeholder="Min">
+        <input type="number" [(ngModel)]="kcalMax" placeholder="Max">
+      </div>
+
+      <div class="filter-group">
+        <label>Sort By</label>
+        <select [(ngModel)]="sortBy">
+          <option value="priceAsc">Price ↑</option>
+          <option value="priceDesc">Price ↓</option>
+          <option value="kcalAsc">Kcal ↑</option>
+          <option value="kcalDesc">Kcal ↓</option>
+          <option value="nameAsc">Name A–Z</option>
+          <option value="nameDesc">Name Z–A</option>
+        </select>
+      </div>
+
+      <button class="apply-btn" (click)="loadProducts()">Apply Filters</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+    <div *ngIf="products.length === 0 && selectedCategory" class="no-products">
+      <p>No products found for this category.</p>
+    </div>
+
+    <div class="product-grid">
+      <div class="card" *ngFor="let product of products">
+        <div class="image-wrapper">
+          <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
+          <div class="badge" *ngIf="product.discount">SALE</div>
+        </div>
+        <div class="info">
+          <h3>{{ product.name }}</h3>
+          <p class="category">{{ product.category }}</p>
+          <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
+          <p class="price">{{ product.price | currency: 'EUR' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
+    </div>
+  </main>
 </div>
