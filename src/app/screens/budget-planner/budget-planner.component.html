@@ -40,22 +40,26 @@
     </div>
   </div>
 
-<div *ngIf="selectedDay" class="category-selector">
+  
+  <div *ngIf="selectedDay" class="category-selector">
   <h3 style="color: #35696a;">
     {{ 'budgetPlanner.selectedDay' | translate: { selectedDay: selectedDay } }}
   </h3>
   <div class="checkboxes">
-   <label *ngFor="let cat of categories">
-  <input
-    type="checkbox"
-    [checked]="isSelected(cat)"
-    (change)="toggleCategory(cat)"
-  />
-  <span class="emoji">{{ getEmoji(cat) }}</span> {{ cat }}
-</label>
+    <label *ngFor="let cat of categories">
+      <input
+        type="checkbox"
+        [checked]="isSelected(cat)"
+        (change)="toggleCategory(cat)"
+      />
+      <span class="emoji">{{ getEmoji(cat) }}</span>
+      {{ ('categories.' + cat) | translate }}
+    </label>
   </div>
-  <button class="btn" (click)="navigate();">{{'navigation.next' | translate}}</button>
+  <button class="btn" (click)="navigate();">{{ 'navigation.next' | translate }}</button>
 </div>
+
+
 <app-alert-popup
   *ngIf="showAlert"
   [message]="alertMessage"

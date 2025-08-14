@@ -4,7 +4,7 @@
         "gender": "Φύλο",
         "male": "Άντρας",
         "female": "Γυναίκα",
-        "age": "Ηλικία pote ton parineiw pote ton trws",
+        "age": "Ηλικία",
         "height": "Ύψος (εκ.)",
         "weight": "Βάρος (κλ)",
         "calculate": "Υπολόγισε",
@@ -29,6 +29,19 @@
     "navigation": {
         "next": "Επόμενο"
     },
+   "categories": {
+        "meatfish": "Κρέας & Ψάρι",
+        "fish seafood": "Φρέσκο ψάρι & θαλασσινά",
+        "fruit vegetables": "Φρούτα & λαχανικά",
+        "dairy": "Γαλακτοκομικά",
+        "bakery": "Αρτοποιία",
+        "frozen": "Κατεψυγμένα",
+        "healthy organic": "Υγιεινά & βιολογικά",
+        "pantry": "Παντοπωλείο",
+        "ready meals": "Έτοιμα γεύματα",
+        "beverages": "Ποτά",
+        "sweets snacks": "Γλυκά & σνακ"
+  },
     "loginScreen": {
         
     },

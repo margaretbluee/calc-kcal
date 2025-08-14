@@ -13,7 +13,18 @@ export class BudgetPlannerComponent implements OnInit{
   form: FormGroup;
   days: string[] = [];
   selectedDay: string | null = null;
-  categories = ['Meat', 'Fish', 'Fruit', 'Vegetable', 'Pasta', 'Dairy', 'Snacks'];
+    categories = [
+    'meatfish',
+    'fruit vegetables',
+    'dairy',
+    'bakery',
+    'frozen',
+    'healthy organic',
+    'pantry',
+    'ready meals',
+    'beverages',
+    'sweets snacks'
+  ];
   daySelections: { [day: string]: string[] } = {};
 showAlert = false;
 alertMessage = '';
@@ -80,18 +91,21 @@ ngOnInit(): void {
     }
   });
 }
-getEmoji(category: string): string {
-  const emojiMap: { [key: string]: string } = {
-    Meat: '🥩',
-    Fish: '🐟',
-    Fruit: '🍎',
-    Vegetable: '🥦',
-    Pasta: '🍝',
-    Dairy: '🧀',
-    Snacks: '🍪',
-  };
-  return emojiMap[category] || '❓';
-}
+  getEmoji(category: string): string {
+    const emojiMap: { [key: string]: string } = {
+      'meatfish': '🥩',
+      'fruit vegetables': '🥦',
+      'dairy': '🧀',
+      'bakery': '🥖',
+      'frozen': '❄',
+      'healthy organic': '🥗',
+      'pantry': '🍝',
+      'ready meals': '🥪',
+      'beverages': '🍷',
+      'sweets snacks': '🍫',
+    };
+    return emojiMap[category] || '❓';
+  }
  
 
 generateDays(count: number) {
@@ -144,13 +158,14 @@ closeAlert(){
   this.showAlert=false;
 }
   toggleCategory(category: string) {
+      const englishKey = category;
     const selected = this.daySelections[this.selectedDay!] || [];
-    const index = selected.indexOf(category);
+    const index = selected.indexOf(englishKey);
 
     if (index >= 0) {
       selected.splice(index, 1);
     } else {
-      selected.push(category);
+      selected.push(englishKey);
     }
 
     this.daySelections[this.selectedDay!] = [...selected];

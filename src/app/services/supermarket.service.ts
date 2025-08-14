@@ -40,7 +40,19 @@ export interface PagedResult<T> {
     $id: string,
     $values:    T[];
   }
+
+  
 }
+
+interface Recipe {
+  day: string;
+  recipe: string; // full recipe string from API
+}
+export interface RecipeResponse {
+  products: Product[];
+  recipe: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +73,17 @@ export class SupermarketService {
       map(supermarkets => supermarkets.map(market => market.name))
     );
   }
+generateRecipe(payload: { day: string; productIds: number[] }): Observable<Recipe> {
+  return this.http.post<Recipe>('http://localhost:5000/api/products/generate-recipe', payload);
+}
 
+getProductsByIds(ids: number[], page: number, pageSize: number) {
+ return this.http.post<any>(`http://localhost:5000/api/products/byIds`, {
+      ids,
+      page,
+      pageSize
+    });  
+}
 getProductsBySupermarket(
   supermarketId: number,
   page: number,

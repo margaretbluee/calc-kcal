@@ -11,13 +11,25 @@
         "result": "Your BMI is",
         "category": "Category",
         "categoryNormal": "Normal weight",
-        "categoryOverweight": "Overweight",
-        "categoryObesity": "Obesity",
-        "categoryUnderweight": "Underweight"
+        "category_overweight": "Overweight",
+        "category_obesity": "Obesity",
+        "category_underweight": "Underweight"
     }, 
     "loginScreen": {
         
     },
+   "categories": {
+    "meatfish": "Meat & Fish",
+    "fruit vegetables": "Fruits & Vegetables",
+    "dairy": "Dairy, Cheese & Refrigerated",
+    "bakery": "Bakery & Pastry",
+    "frozen": "Frozen",
+    "healthy organic": "Healthy & Organic",
+    "pantry": "Pantry & Groceries",
+    "ready meals": "Ready Meals",
+    "beverages": "Beverages",
+    "sweets snacks": "Confectionery & Sweets"
+  },
     "budgetPlanner":{
         "generateDays": "Generate days",
         "selectDay": "Select day",

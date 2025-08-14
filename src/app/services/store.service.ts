@@ -1,15 +1,45 @@
 import { Injectable } from '@angular/core';
-
+import { Product } from './supermarket.service';
+interface ChosenProduct {
+  product: Product;
+  day: string;
+}
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class StoreService {
     constructor() { }
     gender: 'f' | 'm' = 'f';
     age: number = 27;
     height:  number = 173;
     weight: number = 62;
+ private chosen : { product: Product; day: string }[] = [];
 
+  getChosenProducts(): ChosenProduct[] {
+    return this.chosen;
+  }
+
+  addProduct(product: Product, day: string) {
+    if (!this.chosen.some(p => p.product.id === product.id && p.day === day)) {
+      this.chosen.push({ product, day });
+    }
+  }
+
+  removeProduct(productId: number, day: string) {
+    this.chosen = this.chosen.filter(
+      p => !(p.product.id === productId && p.day === day)
+    );
+  }
+
+  isChosen(productId: number, day: string): boolean {
+    return this.chosen.some(p => p.product.id === productId && p.day === day);
+  }
+
+  getTotalPrice(): number {
+    return this.chosen.reduce((sum, cp) => sum + cp.product.price, 0);
+  }
     private budget: number | null = null;
 private daysCount: number | null = null;
 setBudget(budget: number): void {

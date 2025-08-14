@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -25,7 +25,7 @@ interface DayMeta  {
   templateUrl: './calorie-burn-screen.component.html',
   styleUrls: ['./calorie-burn-screen.component.scss'],
 })
-export class CalorieBurnScreenComponent implements OnInit {
+export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
 
    constructor(
     private fb: FormBuilder,
@@ -35,6 +35,7 @@ export class CalorieBurnScreenComponent implements OnInit {
     private _translate: TranslateService
   
   ) {}
+
   /* ---------- forms ---------- */
   userForm!: FormGroup;
   activityForm!: FormGroup;
@@ -69,7 +70,14 @@ export class CalorieBurnScreenComponent implements OnInit {
       },
     },
   };
+  
+  ngAfterViewInit(): void {
+    this._translate.onLangChange.subscribe((data) => {
+      console.log(data);
+      this.currentLang =  this._translate.currentLang;
 
+    });
+  }
 
   onDayChange( day: DayMeta): void {
     console.log("selectedDay", this.selectedDay);
@@ -90,7 +98,7 @@ export class CalorieBurnScreenComponent implements OnInit {
       console.log(data);
       this.currentLang =  this._translate.currentLang;
 
-    })
+    });
     /* personal info */
     console.log(this._store.getGender(),this._store.getAge(),this._store.getWeight(),this._store.getHeight());
     this.userForm = this.fb.group({

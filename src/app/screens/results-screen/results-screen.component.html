@@ -1,121 +1,190 @@
-<!-- <div class="container">
-  <aside class="sidebar">
-    <h2>Supermarkets</h2>
-    <ul class="supermarket-names">
-      <li *ngFor="let market of supermarkets"
-          [class.active]="selectedSupermarket?.id === market.id"
-          (click)="selectSupermarket(market)">
-        {{ market.name }}
-      </li>
-    </ul>
-  </aside>
+<spinner [isVisible]="loading"></spinner>
 
-  <main class="product-grid">
-    <div *ngIf="products.length === 0 && selectedSupermarket" class="no-products">
-      <p>No products found for this supermarket.</p>
-    </div>
-
-    <div class="card" *ngFor="let product of products">
-      <div class="image-wrapper">
-        <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
-        <div class="badge" *ngIf="product.discount">SALE</div>
-      </div>
-      <div class="info">
-        <h3>{{ product.name }}</h3>
-        <p class="category">{{ product.category }}</p>
-        <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
-        <p class="price">{{ product.price | currency: 'EUR' }}</p>
-      </div>
-    </div>
-  </main>
-</div>
-
-<div class="pagination" *ngIf="totalPages > 1">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
-  <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
-</div> -->
 <div class="container">
-  <!-- LEFT SIDEBAR -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-    
-    <h3>Supermarkets</h3>
-    <ul>
-      <li *ngFor="let sm of supermarkets"
-          (click)="onSelectSupermarket(sm)"
-          [class.active]="selectedSupermarket === sm">
-        {{ sm.name }}
-      </li>
-    </ul>
-    <div class="meal-plan">
-      <h2>Meal Plan</h2>
-      <div *ngFor="let day of daysList" class="day-block">
-        <h3 (click)="selectDay(day)" [class.active]="selectedDay === day">{{ day }}</h3>
-        <ul *ngIf="selectedDay === day">
-          <li *ngFor="let category of dailyCategories[day]"
-              [class.active]="selectedCategory === category"
-              (click)="selectCategory(category)">
-            {{ category }}
+
+    <!-- Supermarkets Section -->
+    <div class="section">
+      <h3 (click)="toggleSection('supermarkets')">
+        Supermarkets
+        <span class="toggle-icon">{{ isSectionOpen('supermarkets') ? '−' : '+' }}</span>
+      </h3>
+      <ul *ngIf="isSectionOpen('supermarkets')">
+        <li *ngFor="let sm of supermarkets"
+            (click)="onSelectSupermarket(sm)"
+            [class.active]="selectedSupermarket === sm">
+          {{ sm.name }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Meal Plan Section -->
+    <div class="section">
+      <h3 (click)="toggleSection('mealPlan')">
+        Meal Plan
+        <span class="toggle-icon">{{ isSectionOpen('mealPlan') ? '−' : '+' }}</span>
+      </h3>
+      <div *ngIf="isSectionOpen('mealPlan')">
+        <div *ngFor="let day of daysList" class="day-block">
+          <h4 (click)="selectDay(day)" [class.active]="selectedDay === day">{{ day }}</h4>
+          <ul *ngIf="selectedDay === day">
+            <li *ngFor="let category of dailyCategories[day]"
+                [class.active]="selectedCategory === category"
+                (click)="selectCategory(category)">
+              {{ category }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="section">
+      <h3 (click)="toggleSection('filters')">
+        Filters
+        <span class="toggle-icon">{{ isSectionOpen('filters') ? '−' : '+' }}</span>
+      </h3>
+      <div class="filters" *ngIf="isSectionOpen('filters')">
+        <div class="filter-group">
+          <label>Price (€)</label>
+          <input type="number" [(ngModel)]="priceMin" placeholder="Min">
+          <input type="number" [(ngModel)]="priceMax" placeholder="Max">
+        </div>
+
+        <div class="filter-group">
+          <label>Kcal / 100g</label>
+          <input type="number" [(ngModel)]="kcalMin" placeholder="Min">
+          <input type="number" [(ngModel)]="kcalMax" placeholder="Max">
+        </div>
+
+        <div class="filter-group">
+          <label>Sort By</label>
+          <select [(ngModel)]="sortBy">
+            <option value="priceAsc">Price ↑</option>
+            <option value="priceDesc">Price ↓</option>
+            <option value="kcalAsc">Kcal ↑</option>
+            <option value="kcalDesc">Kcal ↓</option>
+            <option value="nameAsc">Name A–Z</option>
+            <option value="nameDesc">Name Z–A</option>
+          </select>
+        </div>
+
+        <button class="apply-btn" (click)="loadProducts()">Apply Filters</button>
+      </div>
+    </div>
+
+    <!-- Chosen Products Section -->
+    <div class="section">
+      <h3 (click)="toggleSection('chosenProducts')">
+        Chosen Products
+        <span class="toggle-icon">{{ isSectionOpen('chosenProducts') ? '−' : '+' }}</span>
+      </h3>
+
+      <div *ngIf="isSectionOpen('chosenProducts')">
+        <p *ngIf="chosenProducts.length === 0" class="empty-chosen">No chosen products yet.</p>
+
+        <ul *ngIf="chosenProducts.length > 0">
+          <li *ngFor="let product of chosenProducts">
+            {{ product.product.name }} ({{ product.day }}) - 
+            {{ product.product.price | currency: 'EUR' }}
           </li>
         </ul>
+
+        <div class="total" *ngIf="chosenProducts.length > 0">
+          <strong>Total:</strong> {{ totalChosenPrice | currency: 'EUR' }}
+        </div>
+
+        <button 
+          *ngIf="chosenProducts.length > 0" 
+          (click)="toggleShowChosen()" 
+          class="apply-btn">
+          {{ showOnlyChosen ? 'Show All Products' : 'Show Only Chosen' }}
+        </button>
       </div>
     </div>
 
-    <div class="filters">
-      <h2>Filters</h2>
-      <div class="filter-group">
-        <label>Price (€)</label>
-        <input type="number" [(ngModel)]="priceMin" placeholder="Min">
-        <input type="number" [(ngModel)]="priceMax" placeholder="Max">
-      </div>
-
-      <div class="filter-group">
-        <label>Kcal / 100g</label>
-        <input type="number" [(ngModel)]="kcalMin" placeholder="Min">
-        <input type="number" [(ngModel)]="kcalMax" placeholder="Max">
-      </div>
-
-      <div class="filter-group">
-        <label>Sort By</label>
-        <select [(ngModel)]="sortBy">
-          <option value="priceAsc">Price ↑</option>
-          <option value="priceDesc">Price ↓</option>
-          <option value="kcalAsc">Kcal ↑</option>
-          <option value="kcalDesc">Kcal ↓</option>
-          <option value="nameAsc">Name A–Z</option>
-          <option value="nameDesc">Name Z–A</option>
-        </select>
-      </div>
-
-      <button class="apply-btn" (click)="loadProducts()">Apply Filters</button>
+    <!-- Recipe Mode Toggle -->
+    <div class="section">
+      <button class="apply-btn" (click)="toggleRecipesSection()">
+        {{ showRecipeCards ? 'Back to Products' : 'Show Meal Plan Recipes' }}
+      </button>
     </div>
+
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="content">
-    <div *ngIf="products.length === 0 && selectedCategory" class="no-products">
-      <p>No products found for this category.</p>
-    </div>
+    <!-- PRODUCT GRID -->
+    <div *ngIf="!showRecipeCards">
+      <div *ngIf="products.length === 0 && selectedCategory" class="no-products">
+        <p>No products found for this category.</p>
+      </div>
 
-    <div class="product-grid">
-      <div class="card" *ngFor="let product of products">
-        <div class="image-wrapper">
-          <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
-          <div class="badge" *ngIf="product.discount">SALE</div>
+      <div class="product-grid" *ngIf="!loading">
+        <div class="card" *ngFor="let product of products">
+          <div class="image-wrapper">
+            <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
+            <div class="badge" *ngIf="product.discount">SALE</div>
+            <button class="fav-btn"
+                    [class.active]="isChosen(product)"
+                    (click)="toggleChosen(product)">
+              ♥
+            </button>
+          </div>
+          <div class="info">
+            <h3>{{ product.name }}</h3>
+            <p class="category">{{ product.category }}</p>
+            <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
+            <p class="price">{{ product.price | currency: 'EUR' }}</p>
+          </div>
         </div>
-        <div class="info">
-          <h3>{{ product.name }}</h3>
-          <p class="category">{{ product.category }}</p>
-          <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
-          <p class="price">{{ product.price | currency: 'EUR' }}</p>
-        </div>
+      </div>
+
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
       </div>
     </div>
 
-    <div class="pagination" *ngIf="totalPages > 1">
-      <button (click)="prevPage()" [disabled]="currentPage === 1">← Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
+    <!-- MEAL PLAN RECIPE CARDS -->
+ <div *ngIf="showRecipeCards">
+  <div class="day-card" *ngFor="let day of daysList">
+    <div class="day-header">
+      <h3>{{ day }}</h3>
+      <button class="recipe-btn"
+              (click)="generateRecipeForDay(day)"
+              [disabled]="loadingRecipes && selectedDayForRecipe === day">
+        {{ loadingRecipes && selectedDayForRecipe === day ? 'Generating...' : 'Show Recipe' }}
+      </button>
     </div>
+
+    <div class="chosen-products-card">
+      <h4>Ingredients:</h4>
+      <ul>
+        <li *ngFor="let cp of getProductsForDay(day)">
+          {{ cp.product.name }} - {{ cp.product.price | currency:'EUR' }}
+        </li>
+        <li *ngIf="getProductsForDay(day).length === 0">
+          No products chosen for this day
+        </li>
+      </ul>
+    </div>
+
+    <div class="recipe-card" *ngIf="recipeDialogData?.day === day">
+      <h4>Recipe:</h4>
+      <p [innerHTML]="getFormattedRecipe(recipeDialogData?.recipe)"></p>
+    </div>
+  </div>
+</div>
+    <!-- ALERT -->
+    <app-alert-popup
+      *ngIf="showAlert"
+      [message]="alertMessage"
+      [duration]="alertDuration"
+      [status]="alertStatus"
+      (close)="closeAlert()"
+    ></app-alert-popup>
   </main>
 </div>

@@ -1,7 +1,7 @@
 .budget-container {
   width: 80vw;
   max-width: 600px;
-  margin: 2rem auto;
+  margin: 1rem auto;
   padding: 2rem;
   background: #e8f0e8;
   border-radius: 16px;
@@ -22,6 +22,7 @@
 }
 
   .centered{
+        margin-top: -3vh;
         display: flex;
             justify-content: center;
   }
@@ -86,6 +87,8 @@
   border-color: #2a5550;
 }
 .budget-form {    justify-content: space-evenly;
+  margin-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -147,14 +150,16 @@ padding: 0.4rem 0.6rem;
 }
 
 .category-selector {
-  margin-top: 1rem;
+  max-height: 39.1vh;
+    margin-top: 0rem;
+
   background: #f0f7f0;
   border-radius: 16px;
   padding: 1rem;
   box-shadow: 0 0 12px rgba(53, 105, 106, 0.15);
-  max-height: 260px;
-  overflow-y: auto;
+   overflow-y: auto;
   border: 1px solid #b7d1b6;
+  height: 40vh;
 }
 
 .category-selector h3 {
@@ -170,6 +175,7 @@ padding: 0.4rem 0.6rem;
 }
 
 .category-selector label {
+      font-size: 2vh;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -197,7 +203,7 @@ padding: 0.4rem 0.6rem;
 }
 
 .category-selector .btn {
-  margin-top: 1rem;
+  margin-top: 4rem;
   background-color: #357a38;
   color: white;
   border: none;

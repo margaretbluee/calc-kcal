@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
           <label for="age"> {{'bmiScreen.age' | translate}}</label>
-                     <!-- <label for="age"> {{5}}</label> -->
+                 
 
           <input type="number" formControlName="age" id="age" placeholder="e.g. 30" />
         </div>
@@ -28,7 +28,11 @@
       </form>
       <div class="result" *ngIf="bmi">
         <p> {{'bmiScreen.result' | translate}} <strong>{{ bmi }}</strong></p>
-        <p class="category"> {{'bmiScreen.category' | translate}} <strong>{{ category }}</strong></p>
+        <p *ngIf="category === 'category_underweight'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{ 'bmiScreen.category_underweight' | translate }}</strong></p>
+        <p *ngIf="category === 'categoryNormal'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{'bmiScreen.categoryNormal' | translate}}</strong></p>
+        <p *ngIf="category === 'category_overweight'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{'bmiScreen.category_overweight' | translate}}</strong></p>
+        <p *ngIf="category === 'category_obesity'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{'bmiScreen.category_obesity' | translate}}</strong></p>
+
       </div>
 
        <button *ngIf="bmi" class="nav-btn" (click)="navigate();" >Next</button>
