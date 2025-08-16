@@ -9,11 +9,11 @@
           [class.selected]="isSelected(market)"
           (click)="toggleSelection(market)"
         >
-          {{ market }}
+          {{ getLocalizedName(market) }}
         </button>
       </div>
 
-      <button type="submit" class="submit-button" [disabled]="form.value.selectedSupermarkets.length === 0">
+      <button type="submit" class="submit-button" [disabled]="form.value.selectedSupermarkets?.length === 0">
         Continue
       </button>
     </form>

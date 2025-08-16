@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StoreService } from 'src/app/services/store.service';
 import { addDays, format } from 'date-fns' ;
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-budget-planner',
@@ -31,8 +32,12 @@ alertMessage = '';
 alertStatus: 'warning' | 'error' | 'info' = 'warning';
 alertDuration = 95000; // 5 seconds
 missingCategoryDays: string[] = [];
- 
-constructor(private router: Router, private fb: FormBuilder, private store: StoreService) {
+ currentLang?: string;
+constructor(private router: Router, 
+  private fb: FormBuilder, 
+  private store: StoreService,
+  private _translate: TranslateService
+) {
   const savedBudget = this.store.getBudget();
   const savedDaysCount = this.store.getDaysCount();
 
@@ -50,6 +55,11 @@ constructor(private router: Router, private fb: FormBuilder, private store: Stor
 }
 
 ngOnInit(): void {
+        this.currentLang = this._translate.currentLang || 'en'; // fallback to 'en' if undefined
+
+  this._translate.onLangChange.subscribe((data) => {
+    this.currentLang = data.lang;
+  });
   // Load saved budget and daysCount
   const savedBudget = this.store.getBudget();
   const savedDaysCount = this.store.getDaysCount();
@@ -88,6 +98,13 @@ ngOnInit(): void {
       this.selectedDay = null;
       this.daySelections = {};
       this.store.setDailyCategories(this.daySelections);
+    }
+  });
+
+    this.form.get('budget')?.valueChanges.subscribe(val => {
+    if (val >= 1) {
+      this.store.setBudget(val);
+      console.log("value of budget changed", val);
     }
   });
 }
@@ -185,10 +202,18 @@ checkMissingCategories() {
 
 navigate(): void {
    this.checkMissingCategories();
-
+    if (!this.store.getBudget()) {
+      this.alertMessage = this.currentLang ==='el' ? `Το διαθέσιμο budget δεν μπορει να ειναι μηδενικό` : "Please fill out your available budget";
+      this.alertStatus = 'error';
+      this.alertDuration = 4000;
+      this.showAlert = true;
+      return;
+    }
   for (const day of this.days) {
     if (!this.daySelections[day] || this.daySelections[day].length === 0) {
-      this.alertMessage = `Παρακαλώ επιλέξτε κατηγορίες για την ημέρα ${day}`;
+            this.alertMessage = this.currentLang ==='el' ? `Παρακαλώ επιλέξτε κατηγορίες για την ημέρα ${day}` 
+            : `Please select categories for day ${day}`;
+ 
       this.alertStatus = 'error';
       this.alertDuration = 4000;
       this.showAlert = true;

@@ -2,22 +2,9 @@
 
 <div class="container">
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar"  *ngIf="!showOnlyChosen">
 
-    <!-- Supermarkets Section -->
-    <div class="section">
-      <h3 (click)="toggleSection('supermarkets')">
-        Supermarkets
-        <span class="toggle-icon">{{ isSectionOpen('supermarkets') ? '−' : '+' }}</span>
-      </h3>
-      <ul *ngIf="isSectionOpen('supermarkets')">
-        <li *ngFor="let sm of supermarkets"
-            (click)="onSelectSupermarket(sm)"
-            [class.active]="selectedSupermarket === sm">
-          {{ sm.name }}
-        </li>
-      </ul>
-    </div>
+
 
     <!-- Meal Plan Section -->
     <div class="section">
@@ -32,50 +19,61 @@
             <li *ngFor="let category of dailyCategories[day]"
                 [class.active]="selectedCategory === category"
                 (click)="selectCategory(category)">
-              {{ category }}
+              {{ 'categories.' + category  | translate}}
             </li>
           </ul>
         </div>
       </div>
     </div>
+ 
+<!-- Filters Section -->
+<div class="section">
+  <h3 (click)="toggleSection('filters')">
+    Filters
+    <span class="toggle-icon">{{ isSectionOpen('filters') ? '−' : '+' }}</span>
+  </h3>
 
-    <!-- Filters Section -->
-    <div class="section">
-      <h3 (click)="toggleSection('filters')">
-        Filters
-        <span class="toggle-icon">{{ isSectionOpen('filters') ? '−' : '+' }}</span>
-      </h3>
-      <div class="filters" *ngIf="isSectionOpen('filters')">
-        <div class="filter-group">
-          <label>Price (€)</label>
-          <input type="number" [(ngModel)]="priceMin" placeholder="Min">
-          <input type="number" [(ngModel)]="priceMax" placeholder="Max">
-        </div>
+  <div class="filters" *ngIf="isSectionOpen('filters')">
 
-        <div class="filter-group">
-          <label>Kcal / 100g</label>
-          <input type="number" [(ngModel)]="kcalMin" placeholder="Min">
-          <input type="number" [(ngModel)]="kcalMax" placeholder="Max">
-        </div>
+    <!-- Price Slider -->
+<div class="filter-group">
+  <label>Price (€): {{ priceMin }} – {{ priceMax }}</label>
+  <ngx-slider 
+    [(value)]="priceMin" 
+    [(highValue)]="priceMax" 
+    [options]="priceOptions"
+    (userChangeEnd)="loadProducts()">
+  </ngx-slider>
+</div>
 
-        <div class="filter-group">
-          <label>Sort By</label>
-          <select [(ngModel)]="sortBy">
-            <option value="priceAsc">Price ↑</option>
-            <option value="priceDesc">Price ↓</option>
-            <option value="kcalAsc">Kcal ↑</option>
-            <option value="kcalDesc">Kcal ↓</option>
-            <option value="nameAsc">Name A–Z</option>
-            <option value="nameDesc">Name Z–A</option>
-          </select>
-        </div>
+<!-- Kcal Slider -->
+<div class="filter-group">
+  <label>Kcal / 100g: {{ kcalMin }} – {{ kcalMax }}</label>
+  <ngx-slider 
+    [(value)]="kcalMin" 
+    [(highValue)]="kcalMax" 
+    [options]="kcalOptions"
+    (userChangeEnd)="loadProducts()">
+  </ngx-slider>
+</div>
 
-        <button class="apply-btn" (click)="loadProducts()">Apply Filters</button>
-      </div>
+    <!-- Sort By -->
+    <div class="filter-group">
+      <label>Sort By</label>
+      <select [(ngModel)]="sortBy" (change)="loadProducts()">
+        <option value="priceAsc">Price ↑</option>
+        <option value="priceDesc">Price ↓</option>
+        <option value="kcalAsc">Kcal ↑</option>
+        <option value="kcalDesc">Kcal ↓</option>
+        <option value="nameAsc">Name A–Z</option>
+        <option value="nameDesc">Name Z–A</option>
+      </select>
     </div>
 
+  </div>
+</div>
     <!-- Chosen Products Section -->
-    <div class="section">
+    <!-- <div class="section">
       <h3 (click)="toggleSection('chosenProducts')">
         Chosen Products
         <span class="toggle-icon">{{ isSectionOpen('chosenProducts') ? '−' : '+' }}</span>
@@ -102,7 +100,7 @@
           {{ showOnlyChosen ? 'Show All Products' : 'Show Only Chosen' }}
         </button>
       </div>
-    </div>
+    </div> -->
 
     <!-- Recipe Mode Toggle -->
     <div class="section">
@@ -116,9 +114,76 @@
   <!-- MAIN CONTENT -->
   <main class="content">
     <!-- PRODUCT GRID -->
+        <!--Budget Section --> 
+        <div class="cart-toggle">
+        
+  <button class="cart-btn" (click)="toggleShowChosen()">
+    <span *ngIf="!showOnlyChosen">🛒 ({{ chosenProducts.length }})</span>
+    <span *ngIf="showOnlyChosen">⬅ Back to Products</span>
+  </button>
+
+
+</div>
+
+
+<ng-container *ngIf="!showOnlyChosen">
+
+    <div class="budget-container"  [style.background]="getBudgetColorAlpha()" *ngIf="store.getBudget()">
+      <div class="budget-header"  >
+        <span>Budget: €{{ store.getBudget() | number:'1.2-2' }}</span>
+        <span>Remaining: €{{ getRemainingBudget() | number:'1.2-2' }}</span>
+      </div>
+    
+      <div class="budget-bar">
+        <div class="budget-fill" 
+        [style.width.%]="getBudgetProgress()" 
+        [ngClass]="getBudgetColor()"></div>
+      </div>
+    
+      <div class="budget-footer">
+        Spent: €{{ totalChosenPrice | number:'1.2-2' }}
+      </div>
+    </div>
+
+    
+<!-- Kcal Progress -->
+<div class="budget-container"   [style.background]="getKcalColorAlpha()" *ngIf="getKcalLimit()">
+  <div class="budget-header"    >
+    <span>
+      Kcal Goal: {{ getKcalLimit() | number:'1.0-0' }} kcal
+      <span class="info-icon" title="Kcal values are calculated based on 200g of each product, not 100g.">ℹ</span>
+    </span>
+    <span>Remaining: {{ getKcalLimit() - getTotalChosenKcal()*2 | number:'1.0-0' }} kcal</span>
+  </div>
+
+  <div class="budget-bar">
+    <div class="budget-fill"
+         [style.width.%]="getKcalProgress()"
+         [ngClass]="getKcalColor()"></div>
+  </div>
+
+  <div class="budget-footer">
+    Consumed: {{ getTotalChosenKcal()*2 | number:'1.0-0' }} kcal
+  </div>
+</div>
+<!-- Supermarkets Section -->
+    <div class="section" >
+      <h3 (click)="toggleSection('supermarkets')">
+        Supermarkets
+        <span class="toggle-icon">{{ isSectionOpen('supermarkets') ? '−' : '+' }}</span>
+      </h3>
+      <ul *ngIf="isSectionOpen('supermarkets')">
+        <li *ngFor="let sm of supermarkets"
+            (click)="onSelectSupermarket(sm)"
+            [class.active]="selectedSupermarket === sm">
+          {{ getLocalizedName(sm.name) }}
+        </li>
+      </ul>
+    </div>
+
     <div *ngIf="!showRecipeCards">
       <div *ngIf="products.length === 0 && selectedCategory" class="no-products">
-        <p>No products found for this category.</p>
+        <p>No products available</p>
       </div>
 
       <div class="product-grid" *ngIf="!loading">
@@ -134,7 +199,7 @@
           </div>
           <div class="info">
             <h3>{{ product.name }}</h3>
-            <p class="category">{{ product.category }}</p>
+            <p class="category">{{ 'categories.' + product.category | translate}}</p>
             <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
             <p class="price">{{ product.price | currency: 'EUR' }}</p>
           </div>
@@ -147,9 +212,56 @@
         <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next →</button>
       </div>
     </div>
+    </ng-container>
 
     <!-- MEAL PLAN RECIPE CARDS -->
- <div *ngIf="showRecipeCards">
+ 
+    <!-- ALERT -->
+    <app-alert-popup
+      *ngIf="showAlert"
+      [message]="alertMessage"
+      [duration]="alertDuration"
+      [status]="alertStatus"
+      (close)="closeAlert()"
+    ></app-alert-popup>
+
+      <!-- CHOSEN PRODUCTS VIEW -->
+  <ng-container *ngIf="showOnlyChosen">
+    <h2>Chosen Products</h2>
+    <p *ngIf="chosenProducts.length === 0">No chosen products yet.</p>
+        <div class="chosen-products-card" *ngIf="chosenProducts.length > 0">
+ 
+        <div class="product-grid" *ngIf="!loading">
+        <div class="card" *ngFor="let product of products">
+          <div class="image-wrapper">
+            <img [src]="'data:image/jpeg;base64,' + product.imageBase64" [alt]="product.name" />
+            <div class="badge" *ngIf="product.discount">SALE</div>
+            <button class="fav-btn"
+                    [class.active]="isChosen(product)"
+                    (click)="toggleChosen(product)">
+              ♥
+            </button>
+          </div>
+          <div class="info">
+            <h3>{{ product.name }}</h3>
+            <p class="category">{{ 'categories.' + product.category | translate}}</p>
+            <p class="kcal" *ngIf="product.kcal !== null">{{ product.kcal }} kcal</p>
+            <p class="price">{{ product.price | currency: 'EUR' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+
+    <div class="total" *ngIf="chosenProducts.length > 0">
+      <strong>Total:</strong> {{ totalChosenPrice | currency: 'EUR' }}
+    </div>
+
+    <!-- Button to handle recipe logic -->
+    <button *ngIf="chosenProducts.length > 0" (click)="toggleRecipesSection()" class="apply-btn">
+      Show Meal Plan Recipes
+    </button>
+    <div *ngIf="showRecipeCards">
   <div class="day-card" *ngFor="let day of daysList">
     <div class="day-header">
       <h3>{{ day }}</h3>
@@ -178,13 +290,6 @@
     </div>
   </div>
 </div>
-    <!-- ALERT -->
-    <app-alert-popup
-      *ngIf="showAlert"
-      [message]="alertMessage"
-      [duration]="alertDuration"
-      [status]="alertStatus"
-      (close)="closeAlert()"
-    ></app-alert-popup>
+  </ng-container>
   </main>
 </div>

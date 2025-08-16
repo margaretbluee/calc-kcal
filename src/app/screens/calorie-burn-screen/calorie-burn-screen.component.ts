@@ -11,7 +11,9 @@ import { StoreService } from 'src/app/services/store.service';
 import { TranslateService } from '@ngx-translate/core';
 
 interface DayMeta  {
-  key: string;   // “Monday”
+  keyEn: string;   // “Monday”
+  keyEl: string;
+  helperEl: string;
   labelEn: string; // “M”
     labelEl: string; // “M”
 
@@ -25,7 +27,7 @@ interface DayMeta  {
   templateUrl: './calorie-burn-screen.component.html',
   styleUrls: ['./calorie-burn-screen.component.scss'],
 })
-export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
+export class CalorieBurnScreenComponent implements OnInit {
 
    constructor(
     private fb: FormBuilder,
@@ -43,15 +45,15 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
 
   /* ---------- day handling ---------- */
   days: DayMeta[]  = [
-    { key: 'Monday',    labelEn: 'M',    labelEl: 'Δ' },
-    { key: 'Tuesday',   labelEn: 'T',    labelEl: 'Τ' },
-    { key: 'Wednesday', labelEn: 'W' ,    labelEl: 'Τ'},
-    { key: 'Thursday',  labelEn: 'T' ,    labelEl: 'Π'},
-    { key: 'Friday',    labelEn: 'F',    labelEl: 'Π' },
-    { key: 'Saturday',  labelEn: 'S',    labelEl: 'Σ' },
-    { key: 'Sunday',    labelEn: 'S',    labelEl: 'Κ' },
+    { keyEn: 'Monday',     keyEl: 'Δευτέρα',   helperEl: 'Δευτέρας',    labelEn: 'M',    labelEl: 'Δ' },
+    { keyEn: 'Tuesday',    keyEl: 'Τρίτη',    helperEl: 'Τρίτης',    labelEn: 'T',    labelEl: 'Τ' },
+    { keyEn: 'Wednesday',  keyEl: 'Τετάρτη',  helperEl: 'Τετάρτης',   labelEn: 'W' ,    labelEl: 'Τ'},
+    { keyEn: 'Thursday',   keyEl: 'Πέμπτη',   helperEl: 'Πέμπτης',      labelEn: 'T' ,    labelEl: 'Π'},
+    { keyEn: 'Friday',     keyEl: 'Παρασκευή',helperEl: 'Παρασκευής',    labelEn: 'F',    labelEl: 'Π' },
+    { keyEn: 'Saturday',   keyEl: 'Σάββατο',  helperEl: 'Σαββάτου',    labelEn: 'S',    labelEl: 'Σ' },
+    { keyEn: 'Sunday',     keyEl: 'Κυριακή',  helperEl: 'Κυριακής',    labelEn: 'S',    labelEl: 'Κ' },
   ];
-  selectedDay = this.days[0].key;
+  selectedDay = this.currentLang === 'el' ? this.days[0].keyEl : this.days[0].keyEn;
 
   /** holds saved activity per day */
   weekData: Record<string, ActivityInput> = {};
@@ -71,13 +73,7 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
     },
   };
   
-  ngAfterViewInit(): void {
-    this._translate.onLangChange.subscribe((data) => {
-      console.log(data);
-      this.currentLang =  this._translate.currentLang;
-
-    });
-  }
+ 
 
   onDayChange( day: DayMeta): void {
     console.log("selectedDay", this.selectedDay);
@@ -88,17 +84,25 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
     this.activityForm.setValue(data);
   } else {
     this.activityForm.reset({ activity: 'walk', distance: 1, duration: 30 });
-    this.selectedDay = day.key;
+    this.selectedDay = this.currentLang === 'el' ? day.keyEl : day.keyEn;
   }
 }
-
+get selectedDayLabel(): string {
+  const dayObj = this.days.find(
+    d => d.keyEn === this.selectedDay || d.keyEl === this.selectedDay
+  );
+  if (!dayObj) return '';
+  return this.currentLang === 'el' ? dayObj.helperEl : dayObj.keyEn;
+}
 
   ngOnInit(): void {
-    this._translate.onLangChange.subscribe((data) => {
-      console.log(data);
-      this.currentLang =  this._translate.currentLang;
+  this.currentLang = this._translate.currentLang || 'en'; // fallback to 'en' if undefined
 
-    });
+  this._translate.onLangChange.subscribe((data) => {
+    this.currentLang = data.lang;
+  });
+    this.selectedDay = this.currentLang === 'el' ? this.days[0].keyEl : this.days[0].keyEn;
+
     /* personal info */
     console.log(this._store.getGender(),this._store.getAge(),this._store.getWeight(),this._store.getHeight());
     this.userForm = this.fb.group({
@@ -124,9 +128,10 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
 
   /* ---------- UX helpers ---------- */
   /** returns true if this day already has stored data */
-  hasData(dayKey: string): boolean {
-    return !!this.weekData[dayKey];
-  }
+hasData(day: DayMeta): boolean {
+  const key = this.currentLang === 'el' ? day.keyEl : day.keyEn;
+  return !!this.weekData[key];
+}
 
   /* ---------- actions ---------- */
   saveDayActivity(): void {
@@ -153,6 +158,9 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
       this.weekData
     );
 
+    let summaryWeekly = this.summary.weekly;
+    this._store.setSummaryWeekly(summaryWeekly);
+    console.log("summaryWeekly info stred in memory", this._store.getSummaryWeekly());
     /* 2. prepare chart data */
     this.barChartData = {
       labels: this.summary.daily.map((d) => d.day),
@@ -167,6 +175,7 @@ export class CalorieBurnScreenComponent implements OnInit, AfterViewInit {
   }
 
   navigate(): void {
+    this.calorieService.calculateTDEE();
     this.router.navigate(['supermarket-selection-screen']);
   }
 }

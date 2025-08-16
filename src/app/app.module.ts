@@ -13,7 +13,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { UnitConversionService } from './services/unit-conversion.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
- import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider'; 
+import { BmiCalculatorScreenComponent } from './screens/bmi-calculator-screen/bmi-calculator-screen.component';
 import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
 import { TestUnitConvertionScreenComponent } from './screens/test-unit-convertion-screen/test-unit-convertion-screen.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    NgxSliderModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
     ReactiveFormsModule,

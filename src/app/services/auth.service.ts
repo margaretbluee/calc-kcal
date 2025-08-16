@@ -18,28 +18,18 @@ export class AuthService {
   private _apiUrl = 'http://localhost:5000/api/users';
   // private _jsonUrl = '/assets/data/users.json';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private  http: HttpClient) { }
+ private apiUrl = 'http://localhost:5000/api/users'; // adjust to your backend
 
-  login(user: User): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    //this method makes an HTTP POST request
-    return this._http.get<any>(this._apiUrl).pipe(
-      tap((response) => {
-        // checks if the response contains a token
-        // if (response.token) {
-        this._loggedIn.next(true); //updates the logged-in status,
-        //   localStorage.setItem('authToken', response.token); // Store the token
-        // }
-      }),
-      catchError((error) => {
-        console.error('Login error', error);
-        return throwError('Login failed: Invalid email or password.', error);
-        // return of(null);
-      })
-    );
+ 
+ 
+  register(user: { email: string; encryptedPassword: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, user);
   }
+
+login(user: { email: string; password: string }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/login`, user);
+}
 
   logout() {
     this._loggedIn.next(false);

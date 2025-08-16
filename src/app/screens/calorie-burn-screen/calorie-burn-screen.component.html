@@ -1,5 +1,5 @@
 <div class="calorie-burn-container">
-  <h2>{{ "calorieBurnScreen.title" | translate }}</h2>
+  <!-- <h2>{{ "calorieBurnScreen.title" | translate }}</h2> -->
 
   <!-- wrapper switches from 2 → 3 columns when summary exists -->
   <div class="cards-grid" [class.with-results]="summary">
@@ -49,26 +49,22 @@
         class="form-card"
       >
         <div class="day-selector">
-          <label
-            *ngFor="let d of days"
-            [class.saved]="hasData(d.key)"
-            [class.active]="d.key === selectedDay"
-          >
-            <input
-              type="radio"
-              name="day"
-              [ngModelOptions]="{ standalone: true }"
-              [value]="d.key"
-              [(ngModel)]="selectedDay"
-              (change)="onDayChange(d)"
-            />
-            <div *ngIf="currentLang === 'en'">
-              {{ d.labelEn }}
-            </div>
-            <div *ngIf="currentLang === 'el'">
-              {{ d.labelEl }}
-            </div>
-          </label>
+<label
+  *ngFor="let d of days"
+  [class.saved]="hasData(d)"
+  [class.active]="(currentLang === 'el' ? d.keyEl : d.keyEn) === selectedDay"
+>
+  <input
+    type="radio"
+    name="day"
+    [ngModelOptions]="{ standalone: true }"
+    [value]="currentLang === 'el' ? d.keyEl : d.keyEn"
+    [(ngModel)]="selectedDay"
+    (change)="onDayChange(d)"
+  />
+  {{ currentLang === 'en' ? d.labelEn : d.labelEl }}
+</label>
+
         </div>
 
         <h3>{{ "calorieBurnScreen.weekly" | translate }}</h3>
@@ -101,12 +97,13 @@
           <input type="number" formControlName="duration" />
         </div>
 
-        <button type="submit" class="btn primary">
-          {{
-            "calorieBurnScreen.saveSelectedDay"
-              | translate : { selectedDay: selectedDay }
-          }}
-        </button>
+   <button type="submit" class="btn primary">
+  {{
+    "calorieBurnScreen.saveSelectedDay"
+      | translate : { selectedDay: selectedDayLabel }
+  }}
+</button>
+
       </form>
     </div>
 
@@ -126,7 +123,7 @@
         </div>
       </div>
      
-      <button class="btn primary" (click)="navigate()">Next</button>
+      <button class="btn primary" (click)="navigate()">{{'navigation.next' | translate}}</button>
      
     </div>
 

@@ -10,23 +10,39 @@
             <label><input type="radio" value="female" formControlName="gender">  {{'bmiScreen.female' | translate}}</label>
           </div>
         </div>
-        <div class="form-group">
-          <label for="age"> {{'bmiScreen.age' | translate}}</label>
-                 
+    <div class="form-group">
+  <label for="age">{{'bmiScreen.age' | translate}}</label>
+  <input type="number" formControlName="age" id="age" placeholder="30" />
+  <div class="error" *ngIf="bmiForm.get('age')?.errors && bmiForm.get('age')?.touched">
+    <p *ngIf="bmiForm.get('age')?.errors?.['required']">Age is required</p>
+    <p *ngIf="bmiForm.get('age')?.errors?.['min']">Age must be at least 1</p>
+    <p *ngIf="bmiForm.get('age')?.errors?.['max']">Age cannot exceed 100</p>
+  </div>
+</div>
 
-          <input type="number" formControlName="age" id="age" placeholder="e.g. 30" />
-        </div>
-        <div class="form-group">
-          <label for="height"> {{'bmiScreen.height' | translate}}</label>
-          <input type="number" formControlName="height" id="height" placeholder="e.g. 170" />
-        </div>
-        <div class="form-group">
-          <label for="weight"> {{'bmiScreen.weight' | translate}}</label>
-          <input type="number" formControlName="weight" id="weight" placeholder="e.g. 65.5" />
-        </div>
+<div class="form-group">
+  <label for="height">{{'bmiScreen.height' | translate}}</label>
+  <input type="number" formControlName="height" id="height" placeholder="170" />
+  <div class="error" *ngIf="bmiForm.get('height')?.errors && bmiForm.get('height')?.touched">
+    <p *ngIf="bmiForm.get('height')?.errors?.['required']">Height is required</p>
+    <p *ngIf="bmiForm.get('height')?.errors?.['min']">Height must be at least 50 cm</p>
+    <p *ngIf="bmiForm.get('height')?.errors?.['max']">Height cannot exceed 300 cm</p>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="weight">{{'bmiScreen.weight' | translate}}</label>
+  <input type="number" formControlName="weight" id="weight" placeholder="65.5" />
+  <div class="error" *ngIf="bmiForm.get('weight')?.errors && bmiForm.get('weight')?.touched">
+    <p *ngIf="bmiForm.get('weight')?.errors?.['required']">Weight is required</p>
+    <p *ngIf="bmiForm.get('weight')?.errors?.['min']">Weight must be at least 10 kg</p>
+    <p *ngIf="bmiForm.get('weight')?.errors?.['max']">Weight cannot exceed 300 kg</p>
+  </div>
+</div>
+
         <button hidden   class="submit" type="submit" [disabled]="bmiForm.invalid"> {{'bmiScreen.calculate' | translate}}</button>
       </form>
-      <div class="result" *ngIf="bmi">
+      <div class="result" *ngIf="bmi ">
         <p> {{'bmiScreen.result' | translate}} <strong>{{ bmi }}</strong></p>
         <p *ngIf="category === 'category_underweight'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{ 'bmiScreen.category_underweight' | translate }}</strong></p>
         <p *ngIf="category === 'categoryNormal'" class="category"> {{'bmiScreen.category' | translate}} <strong>{{'bmiScreen.categoryNormal' | translate}}</strong></p>
@@ -35,7 +51,7 @@
 
       </div>
 
-       <button *ngIf="bmi" class="nav-btn" (click)="navigate();" >Next</button>
+       <button *ngIf="bmi" class="nav-btn" (click)="navigate();" >{{'navigation.next' | translate}}</button>
        </div>
   
  

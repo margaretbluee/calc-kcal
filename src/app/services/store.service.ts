@@ -4,10 +4,19 @@ interface ChosenProduct {
   product: Product;
   day: string;
 }
+ export interface IUserInfo{gender: 'male' | 'female' | undefined,
+  age: number,
+  weight: number,
+  height: number,
+  role?: 'sUser' | 'rUser' | 'admin'
+}
+
+
+
+
 @Injectable({
   providedIn: 'root'
 })
-
 
 export class StoreService {
     constructor() { }
@@ -15,7 +24,65 @@ export class StoreService {
     age: number = 27;
     height:  number = 173;
     weight: number = 62;
+    sumamryWeekly = 0;
+    bmr: number = 0;
+    tdee: number = 0;
+    supermarkets: string[] = [];
+
  private chosen : { product: Product; day: string }[] = [];
+private userInfo :IUserInfo  = {gender: undefined, age: 0, height: 0 , weight: 0, role: 'rUser'};
+
+
+setSupermarkets(sm: string[]): void {
+  this.supermarkets = sm;
+}
+
+
+getSupermarkets(): string[]{
+  return this.supermarkets;
+}
+getUserInfo() : IUserInfo {
+  return this.userInfo;
+}
+
+serUserInfo(user: IUserInfo){
+  this.userInfo = user;
+}
+
+setRole(role: 'sUser' | 'rUser' | 'admin') {
+  this.userInfo = {
+    ...this.userInfo, // keep existing values
+    role: role        // override only role
+  };
+}
+
+getRole(){
+  return this.userInfo.role;
+}
+getBMR(){
+  return this.bmr;
+}
+
+setBMR(bmr: number){
+  this.bmr = bmr;
+}
+
+getTDEE(){
+  return this.tdee;
+}
+
+setTDEE(tdee: number){
+  this.tdee = tdee;
+}
+
+getSummaryWeekly(){
+  return this.sumamryWeekly;
+}
+
+setSummaryWeekly(sumWeekly: number){
+  this.sumamryWeekly = sumWeekly;
+}
+
 
   getChosenProducts(): ChosenProduct[] {
     return this.chosen;

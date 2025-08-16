@@ -13,18 +13,20 @@
         <label><input id="checkbox" type="checkbox"> Remember me</label>
         <a href="#" id="forgot">Forgot password?</a>
       </div>
-      <button   type="submit" class="btn" (click)="onLogin()">Login</button>
+      <button type="submit" class="btn">Login</button>
 
   
       <div *ngIf="!register" class="register-link" (click)="toggleRegister()">
-        <p>Don't have an account? <a href="#">Register</a></p>
-      </div>
+ <p>
+    Don't have an account?
+    <button class="ugly-btn" type="button"  (click)="toggleRegister()">Register</button>
+  </p>    </div>
     </form>
 </div>
 
 <!-- Register form section -->
 <div *ngIf="register" class="wrapper">
-  <form [formGroup]="loginForm" (ngSubmit)="submitRegister()">
+  <form [formGroup]="registerForm" (ngSubmit)="submitRegister()">
     <h1>Register</h1>
     <div class="input-box">
       <input type="email" placeholder="  Email" formControlName="email" required>
@@ -38,13 +40,28 @@
     <button type="submit" class="btn">Register</button>
 
     <!-- Switch back to login -->
-    <div class="register-link">
-      <p>
-        Already have an account?
-        <a href="#" (click)="toggleRegister(); $event.preventDefault()">Login</a>
-      </p>
-    </div>
+<div class="register-link">
+  <p>
+    Already have an account?
+    <button class="ugly-btn" type="button"   (click)="toggleRegister()">Login</button>
+  </p>
+</div>
   </form>
 </div>
 
+<div class="bypass-link">
+  <p>
+    Want to continue without an account?
+    <a   (click)="bypassLogin(); $event.preventDefault()">Skip</a>
+  </p>
+</div>
+
 <mat-progress-spinner value="50" mode="indeterminate"  *ngIf="loading"  ></mat-progress-spinner>
+    <!-- ALERT -->
+    <app-alert-popup
+      *ngIf="showAlert"
+      [message]="alertMessage"
+      [duration]="alertDuration"
+      [status]="alertStatus"
+      (close)="closeAlert()"
+    ></app-alert-popup>
