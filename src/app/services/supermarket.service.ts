@@ -30,6 +30,7 @@ export interface Product {
   discount: boolean;
   category: string;
   kcal: number | null;
+  kcalIsReal?: boolean;
   supermarketProducts: ISuperMarketProducts
 }
 
@@ -93,7 +94,7 @@ getProductsBySupermarket(
   priceMax?: number | null,
   kcalMin?: number | null,
   kcalMax?: number | null,
-  sortBy?: string
+  sortBy?: string | null
 ): Observable<PagedResult<Product>> {
   const params: any = { page, pageSize };
   if (category) params.category = category;

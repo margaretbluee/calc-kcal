@@ -7,7 +7,6 @@ import jsPDF from 'jspdf';
 import { Options } from '@angular-slider/ngx-slider';
 import { CategoryMappingService } from 'src/app/services/category-mapping.service';
 
-
 interface Supermarket {
   id: number;
   name: string;
@@ -60,26 +59,25 @@ export class ResultsScreenComponent implements OnInit {
   kcalMax: number = 1000;
   sortBy: string = 'priceAsc';
   showRecipeCards = false;
-priceRange = { min:  0.1, max: 40 };
-priceOptions: Options = {
-  floor: 0,
-  ceil: 40,
-  step: 1,
-  translate: (value: number): string => `€${value}`
-};
-supermarketLabels: { [key: string]: { en: string; el: string } } = {
-  'ab': { en: 'AB', el: 'ΑΒ' },
-  'masoutis': { en: 'MASOUTIS', el: 'ΜΑΣΟΥΤΗΣ' },
-  'sklavenitis': { en: 'SKLAVENITIS', el: 'ΣΚΛΑΒΕΝΙΤΗΣ' },
-  
-};
-kcalRange = { min: 0, max: 1000 };
-kcalOptions: Options = {
-  floor: 0,
-  ceil: 1000,
-  step: 10,
-  translate: (value: number): string => `${value} kcal`
-};
+  priceRange = { min: 0.1, max: 40 };
+  priceOptions: Options = {
+    floor: 0,
+    ceil: 40,
+    step: 1,
+    translate: (value: number): string => `€${value}`,
+  };
+  supermarketLabels: { [key: string]: { en: string; el: string } } = {
+    ab: { en: 'AB', el: 'ΑΒ' },
+    masoutis: { en: 'MASOUTIS', el: 'ΜΑΣΟΥΤΗΣ' },
+    sklavenitis: { en: 'SKLAVENITIS', el: 'ΣΚΛΑΒΕΝΙΤΗΣ' },
+  };
+  kcalRange = { min: 0, max: 1000 };
+  kcalOptions: Options = {
+    floor: 0,
+    ceil: 1000,
+    step: 10,
+    translate: (value: number): string => `${value} kcal`,
+  };
   constructor(
     private supermarketService: SupermarketService,
     public store: StoreService,
@@ -96,73 +94,72 @@ kcalOptions: Options = {
     this.refreshChosen();
     this.loading = true;
     this.supermarketService.getSupermarkets().subscribe((markets) => {
-    this.supermarkets = markets;
-    this.selectedSupermarket = this.supermarkets[0];
+      this.supermarkets = markets;
+      this.selectedSupermarket = this.supermarkets[0];
 
-    this.loading = false;
+      this.loading = false;
 
-    this.dailyCategories = this.store.getDailyCategories();
-    this.daysList = Object.keys(this.dailyCategories);
-   
-    const firstDate = Object.keys(this.dailyCategories).sort()[0];
-    const firstCategory = this.dailyCategories[firstDate]?.[0];
+      this.dailyCategories = this.store.getDailyCategories();
+      this.daysList = Object.keys(this.dailyCategories);
 
-    this.selectedDay = firstDate; 
-    this.selectDay(this.selectedDay);
+      const firstDate = Object.keys(this.dailyCategories).sort()[0];
+      const firstCategory = this.dailyCategories[firstDate]?.[0];
 
+      this.selectedDay = firstDate;
+      this.selectDay(this.selectedDay);
 
-    this.selectedCategory = firstCategory;
-    this.selectCategory(this.selectedCategory);
+      this.selectedCategory = firstCategory;
+      this.selectCategory(this.selectedCategory);
 
-    this.onSelectSupermarket(this.selectedSupermarket);
-    //
-   });
+      this.onSelectSupermarket(this.selectedSupermarket);
+      //
+    });
   }
-getLocalizedName(marketKey: string): string {
-  const labels = this.supermarketLabels[marketKey];
-  if (!labels) return marketKey; // fallback to backend value if no translation found
-  return this.currentLang === 'el' ? labels.el : labels.en;
-}
- 
+  getLocalizedName(marketKey: string): string {
+    const labels = this.supermarketLabels[marketKey];
+    if (!labels) return marketKey; // fallback to backend value if no translation found
+    return this.currentLang === 'el' ? labels.el : labels.en;
+  }
+
   getTotalChosenKcal(): number {
-  return this.store.getChosenProducts().reduce((total, item) => {
-    return total + (item.product.kcal || 0);
-  }, 0);
-}
+    return this.store.getChosenProducts().reduce((total, item) => {
+      return total + (item.product.kcal || 0);
+    }, 0);
+  }
 
-getKcalLimit(): number {
-  return (this.store.getTDEE() || 0) * (this.daysList?.length || 1);
-}
+  getKcalLimit(): number {
+    return (this.store.getTDEE() || 0) * (this.daysList?.length || 1);
+  }
 
-getKcalProgress(): number {
-  const limit = this.getKcalLimit();
-  if (!limit) return 0;
-  return Math.min((this.getTotalChosenKcal() / limit) * 100, 100);
-}
+  getKcalProgress(): number {
+    const limit = this.getKcalLimit();
+    if (!limit) return 0;
+    return Math.min((this.getTotalChosenKcal() / limit) * 100, 100);
+  }
 
-getKcalColor(): string {
-  const progress = this.getKcalProgress();
-  if (progress <= 25) return 'blue';
-  if (progress <= 50) return 'green';
-  if (progress <= 75) return 'orange';
-  return 'red';
-}
+  getKcalColor(): string {
+    const progress = this.getKcalProgress();
+    if (progress <= 25) return 'blue';
+    if (progress <= 50) return 'green';
+    if (progress <= 75) return 'orange';
+    return 'red';
+  }
 
-getKcalColorAlpha(alpha: number = 0.3): string {
-  const progress = this.getKcalProgress();
-  if (progress <= 25) return `rgba(13, 110, 253, ${alpha})`; // blue
-  if (progress <= 50) return `rgba(25, 135, 84, ${alpha})`;   // green
-  if (progress <= 75) return `rgba(255, 165, 0, ${alpha})`;   // orange
-  return `rgba(220, 53, 69, ${alpha})`;                        // red
-}
+  getKcalColorAlpha(alpha: number = 0.3): string {
+    const progress = this.getKcalProgress();
+    if (progress <= 25) return `rgba(13, 110, 253, ${alpha})`; // blue
+    if (progress <= 50) return `rgba(25, 135, 84, ${alpha})`; // green
+    if (progress <= 75) return `rgba(255, 165, 0, ${alpha})`; // orange
+    return `rgba(220, 53, 69, ${alpha})`; // red
+  }
 
-getBudgetColorAlpha(alpha: number = 0.3): string {
-  const progress = this.getBudgetProgress();
-  if (progress <= 25) return `rgba(13, 110, 253, ${alpha})`; // blue
-  if (progress <= 50) return `rgba(25, 135, 84, ${alpha})`;   // green
-  if (progress <= 75) return `rgba(255, 165, 0, ${alpha})`;   // orange
-  return `rgba(220, 53, 69, ${alpha})`;                        // red
-}
+  getBudgetColorAlpha(alpha: number = 0.3): string {
+    const progress = this.getBudgetProgress();
+    if (progress <= 25) return `rgba(13, 110, 253, ${alpha})`; // blue
+    if (progress <= 50) return `rgba(25, 135, 84, ${alpha})`; // green
+    if (progress <= 75) return `rgba(255, 165, 0, ${alpha})`; // orange
+    return `rgba(220, 53, 69, ${alpha})`; // red
+  }
 
   min(a: number, b: number): number {
     return Math.min(a, b);
@@ -286,7 +283,7 @@ getBudgetColorAlpha(alpha: number = 0.3): string {
 
   loadChosenProducts() {
     const ids = this.chosenProducts.map((cp) => cp.product.id);
-
+    console.log('loadChosenProducts', 'chosen ids', ids);
     if (ids.length === 0) {
       this.products = [];
       this.totalCount = 0;
@@ -297,7 +294,10 @@ getBudgetColorAlpha(alpha: number = 0.3): string {
     this.supermarketService
       .getProductsByIds(ids, this.currentPage, this.pageSize)
       .subscribe((response) => {
-        this.products = response.items.$values;
+        this.products = response.items.$values.map((p: any) => ({
+          ...p,
+          category: this._categoryMapping.mapCategory(p.category),
+        }));
         this.totalCount = response.totalCount;
         this.loading = false;
       });
@@ -343,28 +343,31 @@ getBudgetColorAlpha(alpha: number = 0.3): string {
   }
 
   getBudgetColor(): string {
-  const progress = this.getBudgetProgress();
-  if (progress <= 25) return 'blue';
-  if (progress <= 50) return 'green';
-  if (progress <= 75) return 'orange';
-  return 'red';
-}
+    const progress = this.getBudgetProgress();
+    if (progress <= 25) return 'blue';
+    if (progress <= 50) return 'green';
+    if (progress <= 75) return 'orange';
+    return 'red';
+  }
 
   get totalChosenPrice(): number {
-    return this.chosenProducts.reduce((total, item) => total + item.product.price, 0);
+    return this.chosenProducts.reduce(
+      (total, item) => total + item.product.price,
+      0
+    );
   }
 
   getBudgetProgress(): number {
-  const budget = this.store.getBudget() || 0;
-  const spent =  this.totalChosenPrice;
-  if (budget === 0) return 0;
-  return Math.min((spent / budget) * 100, 100); // clamp at 100%
-}
+    const budget = this.store.getBudget() || 0;
+    const spent = this.totalChosenPrice;
+    if (budget === 0) return 0;
+    return Math.min((spent / budget) * 100, 100); // clamp at 100%
+  }
 
-getRemainingBudget(): number {
-  const budget = this.store.getBudget() || 0;
-  return Math.max(budget - this.totalChosenPrice, 0);
-}
+  getRemainingBudget(): number {
+    const budget = this.store.getBudget() || 0;
+    return Math.max(budget - this.totalChosenPrice, 0);
+  }
 
   selectDay(day: string) {
     this.selectedDay = day;
@@ -398,13 +401,14 @@ getRemainingBudget(): number {
         this.priceMin,
         this.priceMax,
         this.kcalMin,
-        this.kcalMax
+        this.kcalMax,
+        this.sortBy
       )
       .subscribe((response) => {
-           this.products = response.items.$values.map((p: any) => ({
-        ...p,
-        category: this._categoryMapping.mapCategory(p.category),
-             }));
+        this.products = response.items.$values.map((p: any) => ({
+          ...p,
+          category: this._categoryMapping.mapCategory(p.category),
+        }));
         this.totalCount = response.totalCount;
         this.loading = false;
       });
