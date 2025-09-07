@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StoreService } from 'src/app/services/store.service';
 import { SupermarketService } from 'src/app/services/supermarket.service';
-
+export interface Supermarket {
+  id: number;
+  name: string;
+}
 @Component({
   selector: 'app-supermarket-selector',
   templateUrl: './supermarket-selection-screen.component.html',
@@ -12,7 +15,7 @@ import { SupermarketService } from 'src/app/services/supermarket.service';
 })
 export class SupermarketSelectionScreenComponent {
   form: FormGroup;
-  supermarkets: string[] = [];
+  supermarkets: Supermarket[] = [];
   loading = true;
   currentLang?: string;
  
@@ -29,12 +32,7 @@ supermarketLabels: { [key: string]: { en: string; el: string } } = {
     private _translate: TranslateService,
     private _store: StoreService
   ) {
-    // let existingSelections = this._store.getSupermarkets();
-    // if(existingSelections){
-    //   this.form = this.fb.group({
-    //     selectedSupermarkets: existingSelections
-    //   });
-    // } else{
+
     this.form = this.fb.group({
       selectedSupermarkets: [[]] // multiple selection
     });
@@ -48,13 +46,14 @@ supermarketLabels: { [key: string]: { en: string; el: string } } = {
   this._translate.onLangChange.subscribe((data) => {
     this.currentLang = data.lang;
   });
-  this.supermarketService.getSupermarketNames().subscribe({
-    next: (names) => {
-      this.supermarkets = names;
+  this.supermarketService.getSupermarkets().subscribe({
+    next: (value) => {
+      this.supermarkets = value;
             // patch form with existing selections from store, only if they exist in the backend list
-      const existingSelections = this._store.getSupermarkets() || [];
-      const validSelections = existingSelections.filter(s => this.supermarkets.includes(s));
-      this.form.get('selectedSupermarkets')?.setValue(validSelections);
+      const existingSelections = this._store.getSupermarketsNames() || [];
+const validSelections = existingSelections.filter(name =>
+  this.supermarkets.some(sm => sm.name === name)
+);      this.form.get('selectedSupermarkets')?.setValue(validSelections);
 
       this.loading = false;
       this.loading = false;
@@ -88,8 +87,16 @@ getLocalizedName(marketKey: string): string {
  
 
   submit() {
-    const selected = this.form.value.selectedSupermarkets;
-    this._store.setSupermarkets(selected);
+const selectedNames: string[] = this.form.value.selectedSupermarkets;
+const selected: Supermarket[] = this.supermarkets.filter(item =>
+  selectedNames.includes(item.name)
+);
+this._store.setSupermarkets(selected);
+this._store.setSupermarketsNames(selectedNames); 
+     
+
+    console.log("saving supermaekt info to memory", this._store.getSupermarkets());
+
     // alert(`Selected supermarkets: ${selected.join(', ')}`);
     this.router.navigate(['budget-planner-screen']);
   

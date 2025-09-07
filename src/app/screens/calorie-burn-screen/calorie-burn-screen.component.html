@@ -1,9 +1,6 @@
 <div class="calorie-burn-container">
-  <!-- <h2>{{ "calorieBurnScreen.title" | translate }}</h2> -->
 
-  <!-- wrapper switches from 2 → 3 columns when summary exists -->
   <div class="cards-grid" [class.with-results]="summary">
-    <!-- ───────── ① personal info ───────── -->
     <div class="wrapper">
       <form [formGroup]="userForm" class="form-card">
         <h3>{{ "calorieBurnScreen.personal" | translate }}</h3>
@@ -41,7 +38,6 @@
       </form>
     </div>
 
-    <!-- ───────── ② per‑day activity ───────── -->
     <div class="wrapper">
       <form
         [formGroup]="activityForm"
@@ -110,7 +106,7 @@
     <!-- ───────── ③ results & chart (only after Calculate) ───────── -->
     <div class="wrapper" *ngIf="summary">
       <div class="form-card results-card">
-        <h3>{{ "calorieBurnScreen.weekly" | translate }}</h3>
+        <!-- <h3>{{ "calorieBurnScreen.weekly" | translate }}</h3> -->
         <p class="weekly">{{ summary.weekly }} kcal</p>
 
         <div class="chart-container">

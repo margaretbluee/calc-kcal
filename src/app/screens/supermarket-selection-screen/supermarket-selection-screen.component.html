@@ -1,23 +1,23 @@
  
   <div class="supermarket-container wrapper" *ngIf="!loading; else loadingTpl">
-    <h1>Select Your Supermarkets</h1>
+    <h1>{{'supermarketScreen.title' | translate}}</h1>
     <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="supermarket-options">
         <button
           *ngFor="let market of supermarkets"
           type="button"
-          [class.selected]="isSelected(market)"
-          (click)="toggleSelection(market)"
+          [class.selected]="isSelected(market.name)"
+          (click)="toggleSelection(market.name)"
         >
-          {{ getLocalizedName(market) }}
+          {{ getLocalizedName(market.name) }}
         </button>
       </div>
 
       <button type="submit" class="submit-button" [disabled]="form.value.selectedSupermarkets?.length === 0">
-        Continue
+        {{'navigation.next' | translate}}
       </button>
     </form>
  </div> 
 <ng-template #loadingTpl>
-  <div class="loading-message">Loading supermarkets...</div>
+  <div class="loading-message">{{'supermarketScreen.loading' | translate}}</div>
 </ng-template>

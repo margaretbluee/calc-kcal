@@ -8,10 +8,31 @@
 margin: auto;
     align-self: center;
     margin-top: 90px;
-    min-width: 25vw;
+   width: fit-content;
     min-height: 50vh;
 }
-
+.bypass-link{
+height: fit-content;
+    display: flex
+;
+    width: -moz-fit-content;
+    width: 23vw;
+    color: #110202;
+    margin-top: 4rem;
+    background-color: #357a38;
+    color: white;
+    border: none;
+    padding: 0.6rem 2rem;
+    border-radius: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: smaller;
+    justify-content: center;
+    justify-self: center;
+    margin-top: 2vw;
+ 
+}
 .ugly-btn{
     border: none;
     color:#110202

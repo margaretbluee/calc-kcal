@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product } from './supermarket.service';
+import { Supermarket } from '../screens/supermarket-selection-screen/supermarket-selection-screen.component';
 interface ChosenProduct {
   product: Product;
   day: string;
@@ -27,18 +28,25 @@ export class StoreService {
     sumamryWeekly = 0;
     bmr: number = 0;
     tdee: number = 0;
-    supermarkets: string[] = [];
-
- private chosen : { product: Product; day: string }[] = [];
+     private chosen : { product: Product; day: string }[] = [];
 private userInfo :IUserInfo  = {gender: undefined, age: 0, height: 0 , weight: 0, role: 'rUser'};
 
 
-setSupermarkets(sm: string[]): void {
+    supermarketsNames: string[] = [];
+    supermarkets: Supermarket[] =[];
+
+
+setSupermarketsNames(sm: string[]): void {
+  this.supermarketsNames = sm;
+}
+setSupermarkets(sm: Supermarket[]): void {
   this.supermarkets = sm;
 }
 
-
-getSupermarkets(): string[]{
+getSupermarketsNames(): string[]{
+  return this.supermarketsNames;
+}
+getSupermarkets(): Supermarket[]{
   return this.supermarkets;
 }
 getUserInfo() : IUserInfo {
@@ -166,6 +174,26 @@ getDaysCount(): number | null {
   setWeight(w: number): void{
     this.weight = w;
   }
+clearAll(): void {
+ 
+  this.gender = 'f';
+  this.age = 27;
+  this.height = 173;
+  this.weight = 62;
+  this.sumamryWeekly = 0;
+  this.bmr = 0;
+  this.tdee = 0;
 
+ 
+  this.chosen = [];
+  this.userInfo = { gender: undefined, age: 0, height: 0, weight: 0, role: 'rUser' };
+  this.supermarketsNames = [];
+  this.supermarkets = [];
+  this.dailyCategoryPlan = {};
+
+ 
+  this.budget = null;
+  this.daysCount = null;
+}
 
 }

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { User } from '../models/user';
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthService {
   private _apiUrl = 'http://localhost:5000/api/users';
   // private _jsonUrl = '/assets/data/users.json';
 
-  constructor(private  http: HttpClient) { }
+   constructor(private  http: HttpClient, private _store: StoreService) { }
  private apiUrl = 'http://localhost:5000/api/users'; // adjust to your backend
 
  
@@ -28,10 +29,12 @@ export class AuthService {
   }
 
 login(user: { email: string; password: string }): Observable<any> {
+  this._loggedIn.next(true);
   return this.http.post(`${this.apiUrl}/login`, user);
 }
 
   logout() {
+    this._store.clearAll();
     this._loggedIn.next(false);
   }
 

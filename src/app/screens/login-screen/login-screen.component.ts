@@ -124,6 +124,7 @@ export class LoginScreenComponent {
   console.log("sending request with data", "login payload", payload);
       this._authService.login(payload).subscribe({
         next: (res) => {
+ 
           this.loading = false;
           this.alertMessage =
             this.currentLang === 'el' ? `Καλως ορίσατε` : 'Welcome';
@@ -164,7 +165,8 @@ export class LoginScreenComponent {
 
   // bypass login/register
   bypassLogin(): void {
+  
     this._storeService.setRole('sUser');
-    this._appStatesService.currentState(APP_STATES.FILTERED_RESULTS);
+    this._appStatesService.currentState(APP_STATES.SUPERMARKETS_OF_PREFERENCE);
   }
 }

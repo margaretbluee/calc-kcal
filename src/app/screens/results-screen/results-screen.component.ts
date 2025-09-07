@@ -93,8 +93,8 @@ export class ResultsScreenComponent implements OnInit {
     });
     this.refreshChosen();
     this.loading = true;
-    this.supermarketService.getSupermarkets().subscribe((markets) => {
-      this.supermarkets = markets;
+    this.supermarketService.getSupermarkets().subscribe(() => {
+      this.supermarkets = this.store.getSupermarkets();
       this.selectedSupermarket = this.supermarkets[0];
 
       this.loading = false;
@@ -326,6 +326,13 @@ export class ResultsScreenComponent implements OnInit {
   private refreshChosen() {
     this.chosenProducts = this.store.getChosenProducts();
   }
+
+getAllChosenProducts(product: Product): boolean {
+  return this.store
+    .getChosenProducts()
+    .some((chosen) => chosen.product.id === product.id);
+}
+
 
   isChosen(product: Product): boolean {
     if (this.selectedDay) {

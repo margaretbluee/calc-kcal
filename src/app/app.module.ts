@@ -33,7 +33,9 @@ import { BudgetPlannerComponent } from './screens/budget-planner/budget-planner.
 import { ResultsScreenComponent } from './screens/results-screen/results-screen.component';
 import { AlertPopupComponent } from './components/alert-popup/alert-popup.component'; 
 import { MatDividerModule } from '@angular/material/divider';
-
+ import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // <-- Import this
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -58,9 +60,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
     FormsModule,
     AppRoutingModule,
     NgxSliderModule,
+   MatMenuModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
     ReactiveFormsModule,

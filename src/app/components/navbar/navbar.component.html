@@ -1,24 +1,13 @@
 <mat-toolbar class="app-title mat-elevation-z8 custom-toolbar">
-    <span class="nav-title" *ngIf="isWideScreen">
-        <mat-icon>fastfood</mat-icon> Healthy </span>
-    <div class="spacer"></div>
-  
-    <ng-container class="cont" *ngIf="isLoggedIn">
-        <a mat-button [routerLink]="['/dashboard']" [class.active]="isActive('/dashboard')">Dashboard</a>
-        <a mat-button [routerLink]="['/history']" [class.active]="isActive('/history')">History</a>
-        <a mat-button [routerLink]="['/messages']" [class.active]="isActive('/messages')">Messages</a>
-        <a mat-button [routerLink]="['/edit']" [class.active]="isActive('/edit')">Edit</a>
-  
-        <a mat-button [routerLink]="['/personal-details']"
-        [class.active]="isActive('/personal-details') 
-        || isActive('/proffesional-details')
-        || isActive('/permissions-assignment')">New User</a>
-  
-        <a mat-button (click)="onLogout()">Sign Out</a>
-    </ng-container>
-  
-    <!-- <ng-container *ngIf="!isLoggedIn">
-        <a mat-button [routerLink]="['/login']">Login</a>
-    </ng-container> -->
-  </mat-toolbar>
-  
+  <span class="nav-title" *ngIf="isWideScreen">
+    <mat-icon>fastfood</mat-icon> Healthy
+  </span>
+  <div class="spacer"></div>
+
+  <ng-container class="cont" *ngIf="isLoggedIn">
+    <button class="menu" (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sign Out</span>
+    </button>
+  </ng-container>
+</mat-toolbar>

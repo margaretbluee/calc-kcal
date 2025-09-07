@@ -38,12 +38,10 @@ export class CalorieBurnScreenComponent implements OnInit {
   
   ) {}
 
-  /* ---------- forms ---------- */
   userForm!: FormGroup;
   activityForm!: FormGroup;
   currentLang: string = '';
 
-  /* ---------- day handling ---------- */
   days: DayMeta[]  = [
     { keyEn: 'Monday',     keyEl: 'Δευτέρα',   helperEl: 'Δευτέρας',    labelEn: 'M',    labelEl: 'Δ' },
     { keyEn: 'Tuesday',    keyEl: 'Τρίτη',    helperEl: 'Τρίτης',    labelEn: 'T',    labelEl: 'Τ' },
@@ -55,10 +53,8 @@ export class CalorieBurnScreenComponent implements OnInit {
   ];
   selectedDay = this.currentLang === 'el' ? this.days[0].keyEl : this.days[0].keyEn;
 
-  /** holds saved activity per day */
   weekData: Record<string, ActivityInput> = {};
 
-  /* ---------- result ---------- */
   summary:
     | { daily: { day: string; calories: number }[]; weekly: number }
     | null = null;
@@ -103,7 +99,7 @@ get selectedDayLabel(): string {
   });
     this.selectedDay = this.currentLang === 'el' ? this.days[0].keyEl : this.days[0].keyEn;
 
-    /* personal info */
+     /* personal info */
     console.log(this._store.getGender(),this._store.getAge(),this._store.getWeight(),this._store.getHeight());
     this.userForm = this.fb.group({
       gender: [this._store.getGender(), Validators.required],
@@ -118,7 +114,7 @@ get selectedDayLabel(): string {
     this.userForm.get("height")?.disable();
     this.userForm.get("weight")?.disable();
 
-    /* activity info for the currently selected day */
+     
     this.activityForm = this.fb.group({
       activity: ['walk', Validators.required],
       distance: [1, [Validators.required, Validators.min(0.1)]],
@@ -126,22 +122,19 @@ get selectedDayLabel(): string {
     });
   }
 
-  /* ---------- UX helpers ---------- */
-  /** returns true if this day already has stored data */
+
 hasData(day: DayMeta): boolean {
   const key = this.currentLang === 'el' ? day.keyEl : day.keyEn;
   return !!this.weekData[key];
 }
 
-  /* ---------- actions ---------- */
   saveDayActivity(): void {
     if (this.activityForm.invalid) return;
 
     
-    /* store the data */
+    
     this.weekData[this.selectedDay] = this.activityForm.value as ActivityInput;
-
-    /* quick visual feedback: reset the form & keep activity default */
+ 
     this.activityForm.reset({
       activity: 'walk',
       distance: 1,
@@ -152,7 +145,7 @@ hasData(day: DayMeta): boolean {
   calculate(): void {
     if (this.userForm.invalid || Object.keys(this.weekData).length === 0) return;
 
-    /* 1. get summary */
+ 
     this.summary = this.calorieService.getWeeklySummary(
       this.userForm.value,
       this.weekData
@@ -161,13 +154,14 @@ hasData(day: DayMeta): boolean {
     let summaryWeekly = this.summary.weekly;
     this._store.setSummaryWeekly(summaryWeekly);
     console.log("summaryWeekly info stred in memory", this._store.getSummaryWeekly());
-    /* 2. prepare chart data */
+ 
+    const label = this.currentLang === 'en' ? 'Calories Burned' : 'Θερμίδες'
     this.barChartData = {
       labels: this.summary.daily.map((d) => d.day),
       datasets: [
         {
           data: this.summary.daily.map((d) => d.calories),
-          label: 'Calories Burned',
+          label: label,
           backgroundColor: '#4caf50',
         },
       ],

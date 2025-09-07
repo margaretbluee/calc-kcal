@@ -16,8 +16,46 @@
         "category_underweight": "Underweight"
     }, 
     "loginScreen": {
-        
+        "login": "Login",
+        "noAccount": "Don't have an account?",
+        "register": "Register",
+        "haveAccount": "Already have an account?",
+        "skip":"Skip"
     },
+    "supermarketScreen": {
+        "title": "Please select the spermarkets of your choise",
+        "loading": "Loading supermarkets..."
+    },
+      "resultsScreen": {
+    "mealPlan": "Meal Plan",
+    "budget": "Budget",
+    "remaining": "Remaining",
+    "spent": "Spent",
+    "kcalGoal": "Kcal Goal",
+    "filters": "Filters",
+    "sort": "Sort By",
+    "priceAsc": "Price ↑",
+    "priceDesc": "Price ↓",
+    "kcalAsc": "Kcal ↑",
+    "kcalDesc": "Kcal ↓",
+    "NameAsc": "Name Α-Ζ",
+    "NameDesc" : "Name Ζ-Α" ,
+    "productView": "⬅ Back to Products",
+    "supermarkets": "Supermarkets",
+    "noProducts": "No available products",
+    "paginationPrevious":"← Previous",
+    "paginationNext": "Next →",
+    "page": "Page",
+    "of": "of",
+    "chosenProducts":"Chosen Products",
+    "sale": "Sale",
+    "total": "Total:",
+    "generating": "Generating...",
+    "showRecipe": "Show Recipe",
+    "ingredients": "Ingredients",
+    "recipe": "Recipe",
+    "noChosenProducts": "No Chosen Products for the day" 
+   },
    "categories": {
     "meatfish": "Meat & Fish",
     "fruit vegetables": "Fruits & Vegetables",

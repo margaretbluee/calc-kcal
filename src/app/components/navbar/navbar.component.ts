@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this._authService.logout();
-    this._router.navigate(['/login']); // redirect to login on success
+    this._router.navigate(['/login-screen']); // redirect to login on success
     //  this.loginForm.reset(); 
   }
 
